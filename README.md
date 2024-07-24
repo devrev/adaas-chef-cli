@@ -2,6 +2,8 @@
 
 DevRev auxiliary CLI for ADaaS recipe development
 
+General ADaaS documentation: https://developer.devrev.ai/snapin-development/adaas/overview
+
 ## Step by step guide
 
 ## Install the chef-cli
