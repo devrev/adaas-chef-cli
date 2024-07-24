@@ -1,0 +1,173 @@
+{
+    "starting_recipe_blueprint": {
+        "external_record_types": {
+            "comment": {
+                "forward": true,
+                "reverse": false,
+                "shard": {
+                    "constructed_custom_fields": {},
+                    "devrev_leaf_type": {
+                        "object_type": "comment"
+                    },
+                    "shard": "create_shard",
+                    "stock_field_mappings": {
+                        "body": {
+                            "forward": true,
+                            "primary_external_field": "body",
+                            "reverse": true,
+                            "transformation_method": {
+                                "transformation_method": "use_directly"
+                            }
+                        },
+                        "created_by_id": {
+                            "forward": true,
+                            "primary_external_field": "by",
+                            "reverse": true,
+                            "transformation_method": {
+                                "transformation_method": "use_directly"
+                            }
+                        },
+                        "modified_by_id": {
+                            "forward": true,
+                            "primary_external_field": "by",
+                            "reverse": true,
+                            "transformation_method": {
+                                "transformation_method": "use_directly"
+                            }
+                        },
+                        "parent_object_id": {
+                            "forward": true,
+                            "primary_external_field": "parent",
+                            "reverse": true,
+                            "transformation_method": {
+                                "transformation_method": "use_directly"
+                            }
+                        },
+                        "parent_object_type": {
+                            "forward": true,
+                            "reverse": false,
+                            "transformation_method": {
+                                "can_apply_to_null": true,
+                                "forward_jq": "\"work\"",
+                                "transformation_method": "use_raw_jq",
+                                "use_primary_input": false
+                            }
+                        }
+                    }
+                }
+            },
+            "issue": {
+                "forward": true,
+                "reverse": false,
+                "shard": {
+                    "constructed_custom_fields": {},
+                    "devrev_leaf_type": {
+                        "object_type": "ticket"
+                    },
+                    "shard": "create_shard",
+                    "stock_field_mappings": {
+                        "applies_to_part_id": {
+                            "forward": true,
+                            "reverse": false,
+                            "transformation_method": {
+                                "is_array": false,
+                                "leaf_type": {
+                                    "object_type": "product"
+                                },
+                                "transformation_method": "use_devrev_record"
+                            }
+                        },
+                        "created_by_id": {
+                            "forward": true,
+                            "primary_external_field": "creator",
+                            "reverse": true,
+                            "transformation_method": {
+                                "transformation_method": "use_directly"
+                            }
+                        },
+                        "owned_by_ids": {
+                            "forward": true,
+                            "primary_external_field": "owner",
+                            "reverse": false,
+                            "transformation_method": {
+                                "transformation_method": "use_as_array_value"
+                            }
+                        },
+                        "severity": {
+                            "forward": true,
+                            "primary_external_field": "priority",
+                            "reverse": false,
+                            "transformation_method": {
+                                "forward": {
+                                    "P-2": {
+                                        "value": "medium"
+                                    },
+                                    "P-0": {
+                                        "value": "blocker"
+                                    },
+                                    "P-1": {
+                                        "value": "high"
+                                    }
+                                },
+                                "is_array": false,
+                                "transformation_method": "map_enum"
+                            }
+                        },
+                        "stage": {
+                            "forward": true,
+                            "reverse": false,
+                            "transformation_method": {
+                                "can_apply_to_null": true,
+                                "forward_jq": "\"queued\"",
+                                "transformation_method": "use_raw_jq",
+                                "use_primary_input": false
+                            }
+                        },
+                        "title": {
+                            "forward": true,
+                            "primary_external_field": "headline",
+                            "reverse": true,
+                            "transformation_method": {
+                                "transformation_method": "use_directly"
+                            }
+                        }
+                    }
+                }
+            },
+            "user": {
+                "forward": true,
+                "reverse": false,
+                "shard": {
+                    "constructed_custom_fields": {},
+                    "devrev_leaf_type": {
+                        "object_type": "devu"
+                    },
+                    "shard": "create_shard",
+                    "stock_field_mappings": {
+                        "display_name": {
+                            "forward": true,
+                            "primary_external_field": "name",
+                            "reverse": true,
+                            "transformation_method": {
+                                "transformation_method": "use_directly"
+                            }
+                        },
+                        "email": {
+                            "forward": true,
+                            "primary_external_field": "name",
+                            "reverse": true,
+                            "transformation_method": {
+                                "transformation_method": "use_directly"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "_dev_recipe_blueprint_id": "don:integration:dvrv-us-1:devo/842:sync_recipe_blueprint/34",
+    "_dev_recipe_blueprint_object_version": 22,
+    "_dev_external_system_type": "ADaaS",
+    "_dev_snap_in_slug": "x",
+    "_dev_import_slug": "x"
+}

@@ -1,0 +1,288 @@
+{
+  "id": "incident-0",
+  "created_date": "1970-02-02T04:06:46+01:00",
+  "modified_date": "1975-03-08T21:15:20+01:00",
+  "data": {
+    "actual_close_date": null,
+    "creator": "user-9",
+    "owner": "user-6",
+    "rca": [
+      "𐐱/|\u0000AB㒆A bᛮ﻿!"
+    ],
+    "severity": "severe",
+    "summary": ""
+  }
+}
+{
+  "id": "incident-1",
+  "operation": "created",
+  "created_date": "1970-01-01T01:00:14+01:00",
+  "modified_date": "1970-01-01T01:01:01+01:00",
+  "data": {
+    "actual_close_date": null,
+    "creator": "user-1",
+    "owner": "user-0",
+    "rca": [
+      "󻓫̃ aᛮ"
+    ],
+    "severity": "severe",
+    "summary": ""
+  }
+}
+{
+  "id": "incident-2",
+  "created_date": "1971-08-23T14:31:18+01:00",
+  "modified_date": "1970-01-01T01:09:35+01:00",
+  "data": {
+    "actual_close_date": "1970-01-01T01:38:35+01:00",
+    "creator": "user-7",
+    "owner": "user-5",
+    "rca": [
+      "\\𑱡"
+    ],
+    "severity": "severe",
+    "summary": ""
+  }
+}
+{
+  "id": "incident-3",
+  "created_date": "1970-01-01T09:08:04+01:00",
+  "modified_date": "1970-01-01T01:00:30+01:00",
+  "data": {
+    "actual_close_date": "1970-01-01T01:00:19+01:00",
+    "creator": "user-2",
+    "owner": "user-10",
+    "rca": null,
+    "severity": "fatal",
+    "summary": "󾐼,"
+  }
+}
+{
+  "id": "incident-4",
+  "operation": "created",
+  "created_date": "1970-01-01T01:25:42+01:00",
+  "modified_date": "1970-01-01T01:00:01+01:00",
+  "data": {
+    "actual_close_date": "1970-01-01T01:08:18+01:00",
+    "creator": "user-11",
+    "owner": "user-5",
+    "rca": null,
+    "severity": "severe",
+    "summary": "\u0015៱˧"
+  }
+}
+{
+  "id": "incident-5",
+  "created_date": "1970-01-01T01:00:15+01:00",
+  "modified_date": "1970-01-01T01:00:03+01:00",
+  "data": {
+    "actual_close_date": null,
+    "creator": "user-3",
+    "owner": "user-8",
+    "rca": [
+      "£"
+    ],
+    "severity": "minor",
+    "summary": "𑣄ᤪ\r \u0026"
+  }
+}
+{
+  "id": "incident-6",
+  "operation": "created",
+  "created_date": "1971-08-22T20:52:28+01:00",
+  "modified_date": "1970-01-26T01:21:41+01:00",
+  "data": {
+    "actual_close_date": null,
+    "creator": "user-5",
+    "owner": "user-8",
+    "rca": [
+      "☺́"
+    ],
+    "severity": "fatal",
+    "summary": "ࡗ|"
+  }
+}
+{
+  "id": "incident-7",
+  "operation": "created",
+  "created_date": "1970-01-01T01:35:43+01:00",
+  "modified_date": "1970-01-01T01:00:00+01:00",
+  "data": {
+    "actual_close_date": null,
+    "creator": "user-6",
+    "owner": "user-0",
+    "rca": null,
+    "severity": "severe",
+    "summary": ""
+  }
+}
+{
+  "id": "incident-8",
+  "operation": "created",
+  "created_date": "1970-01-01T01:00:43+01:00",
+  "modified_date": "1970-01-01T01:23:09+01:00",
+  "data": {
+    "actual_close_date": "1970-01-01T01:00:27+01:00",
+    "creator": "user-2",
+    "owner": "user-9",
+    "rca": null,
+    "severity": "minor",
+    "summary": "~۞ǘȾȺa"
+  }
+}
+{
+  "id": "incident-9",
+  "operation": "created",
+  "created_date": "1970-01-01T01:01:53+01:00",
+  "modified_date": "1970-01-01T01:00:04+01:00",
+  "data": {
+    "actual_close_date": null,
+    "creator": "user-12",
+    "owner": "user-6",
+    "rca": null,
+    "severity": "severe",
+    "summary": "$;4"
+  }
+}
+{
+  "id": "incident-10",
+  "operation": "created",
+  "created_date": "1970-01-01T01:00:04+01:00",
+  "modified_date": "1970-01-01T01:00:07+01:00",
+  "data": {
+    "actual_close_date": null,
+    "creator": "user-0",
+    "owner": "user-13",
+    "rca": [
+      "₷󶞧⹌﮻　ʷऻ(𑣩"
+    ],
+    "severity": "fatal",
+    "summary": "a~˳@"
+  }
+}
+{
+  "id": "incident-11",
+  "operation": "created",
+  "created_date": "1970-01-02T22:31:35+01:00",
+  "modified_date": "1970-01-01T01:03:03+01:00",
+  "data": {
+    "actual_close_date": null,
+    "creator": "user-4",
+    "owner": "user-1",
+    "rca": null,
+    "severity": "fatal",
+    "summary": " {"
+  }
+}
+{
+  "id": "incident-12",
+  "created_date": "1970-01-01T01:01:55+01:00",
+  "modified_date": "2050-05-19T12:36:24+02:00",
+  "data": {
+    "actual_close_date": null,
+    "creator": "user-5",
+    "owner": "user-2",
+    "rca": null,
+    "severity": "severe",
+    "summary": ""
+  }
+}
+{
+  "id": "incident-13",
+  "created_date": "1970-01-03T00:37:24+01:00",
+  "modified_date": "1970-01-01T01:02:26+01:00",
+  "data": {
+    "actual_close_date": "1970-01-01T01:06:31+01:00",
+    "creator": "user-3",
+    "owner": "user-11",
+    "rca": null,
+    "severity": "fatal",
+    "summary": "^-=A©"
+  }
+}
+{
+  "id": "incident-14",
+  "created_date": "1970-01-01T02:35:19+01:00",
+  "modified_date": "1970-01-01T01:00:04+01:00",
+  "data": {
+    "actual_close_date": "2042-11-13T05:07:36+01:00",
+    "creator": "user-3",
+    "owner": "user-1",
+    "rca": [
+      " .ꪴ` "
+    ],
+    "severity": "fatal",
+    "summary": "@\u003eȺⳮ꙲󠀴〸"
+  }
+}
+{
+  "id": "incident-15",
+  "operation": "created",
+  "created_date": "1970-01-01T01:00:07+01:00",
+  "modified_date": "1970-01-01T01:00:30+01:00",
+  "data": {
+    "actual_close_date": null,
+    "creator": "user-9",
+    "owner": "user-9",
+    "rca": null,
+    "severity": "severe",
+    "summary": "＝A\u0000\u003c{"
+  }
+}
+{
+  "id": "incident-16",
+  "created_date": "1970-11-10T12:12:48+01:00",
+  "modified_date": "1970-01-01T01:04:23+01:00",
+  "data": {
+    "actual_close_date": null,
+    "creator": "user-10",
+    "owner": "user-5",
+    "rca": null,
+    "severity": "fatal",
+    "summary": "⦷?"
+  }
+}
+{
+  "id": "incident-17",
+  "created_date": "1970-01-01T01:36:09+01:00",
+  "modified_date": "1970-01-01T01:18:32+01:00",
+  "data": {
+    "actual_close_date": "1970-01-01T01:04:08+01:00",
+    "creator": "user-8",
+    "owner": "user-0",
+    "rca": [
+      ""
+    ],
+    "severity": "minor",
+    "summary": "𑆳_~!AA̅'"
+  }
+}
+{
+  "id": "incident-18",
+  "operation": "created",
+  "created_date": "1970-01-01T01:52:45+01:00",
+  "modified_date": "1970-01-01T01:00:13+01:00",
+  "data": {
+    "actual_close_date": "1970-01-01T04:10:00+01:00",
+    "creator": "user-8",
+    "owner": "user-5",
+    "rca": [
+      "Aº- ₶/.₡፹aीᾊ("
+    ],
+    "severity": "fatal",
+    "summary": "Aã"
+  }
+}
+{
+  "id": "incident-19",
+  "created_date": "1970-01-01T01:02:30+01:00",
+  "modified_date": "1970-01-01T02:26:20+01:00",
+  "data": {
+    "actual_close_date": "1970-01-01T01:00:01+01:00",
+    "creator": "user-3",
+    "owner": "user-1",
+    "rca": null,
+    "severity": "severe",
+    "summary": " ^`"
+  }
+}

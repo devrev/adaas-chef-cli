@@ -1,0 +1,179 @@
+{
+    "record_types": {
+        "comment": {
+            "fields": {
+                "body": {
+                    "is_required": true,
+                    "type": "rich_text"
+                },
+                "parent": {
+                    "is_required": true,
+                    "type": "reference",
+                    "reference": {
+                        "refers_to": {
+                            "#record:issue": {}
+                        },
+                        "role": "parent"
+                    }
+                },
+                "by": {
+                    "is_required": true,
+                    "type": "reference",
+                    "reference": {
+                        "refers_to": {
+                            "#record:user": {}
+                        }
+                    }
+                }
+            },
+            "loading": {}
+        },
+        "issue": {
+            "fields": {
+                "actual_close_date": {
+                    "name": "Closed at",
+                    "type": "timestamp"
+                },
+                "owner": {
+                    "is_required": true,
+                    "type": "reference",
+                    "reference": {
+                        "refers_to": {
+                            "#record:user": {}
+                        }
+                    }
+                },
+                "creator": {
+                    "is_required": true,
+                    "type": "reference",
+                    "reference": {
+                        "refers_to": {
+                            "#record:user": {}
+                        }
+                    }
+                },
+                "priority": {
+                    "name": "Priority",
+                    "is_required": true,
+                    "type": "enum",
+                    "enum": {
+                        "values": [
+                            {
+                                "key": "P-0"
+                            },
+                            {
+                                "key": "P-1"
+                            },
+                            {
+                                "key": "P-2"
+                            }
+                        ]
+                    }
+                },
+                "target_close_date": {
+                    "type": "date"
+                },
+                "headline": {
+                    "name": "Headline",
+                    "is_required": true,
+                    "type": "text"
+                }
+            },
+            "loading": {},
+            "category": "work"
+        },
+        "incident": {
+            "name": "Incident Report",
+            "category": "work",
+            "fields": {
+                "actual_close_date": {
+                    "name": "Closed at",
+                    "type": "timestamp"
+                },
+                "owner": {
+                    "is_required": true,
+                    "type": "reference",
+                    "reference": {
+                        "refers_to": {
+                            "#record:user": {}
+                        }
+                    }
+                },
+                "creator": {
+                    "is_required": true,
+                    "type": "reference",
+                    "reference": {
+                        "refers_to": {
+                            "#record:user": {}
+                        }
+                    }
+                },
+                "severity": {
+                    "name": "Severity",
+                    "is_required": true,
+                    "type": "enum",
+                    "enum": {
+                        "values": [
+                            {
+                                "key": "fatal"
+                            },
+                            {
+                                "key": "severe"
+                            },
+                            {
+                                "key": "minor"
+                            }
+                        ]
+                    }
+                },
+                "summary": {
+                    "is_required": true,
+                    "type": "text",
+                    "name": "Summary"
+                },
+                "rca": {
+                    "type": "rich_text",
+                    "name": "Root cause analysis"
+                }
+            }
+        },
+        "user": {
+            "fields": {
+                "phone": {
+                    "type": "struct",
+                    "struct": {
+                        "key": "phone_number"
+                    }
+                },
+                "name": {
+                    "is_required": true,
+                    "type": "text",
+                    "text": {
+                        "max_length": 99,
+                        "min_length": 4
+                    }
+                }
+            }
+        }
+    },
+    "struct_types": {
+        "phone_number": {
+            "name": "Phone number",
+            "fields": {
+                "country_code": {
+                    "type": "text"
+                },
+                "area_code": {
+                    "type": "text"
+                },
+                "number": {
+                    "type": "text",
+                    "is_required": true
+                }
+            }
+        }
+    },
+    "record_type_categories": {
+        "work": {}
+    }
+}

@@ -1,0 +1,943 @@
+{
+ "title": "Schema of the external_domain_metadata used to describe the logical structure of the external system",
+ "required": [
+  "record_types"
+ ],
+ "additionalProperties": false,
+ "definitions": {
+  "CollectionData": {
+   "additionalProperties": false,
+   "properties": {
+    "max_length": {
+     "minimum": 0,
+     "type": "integer"
+    },
+    "min_length": {
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "CustomStage": {
+   "required": [
+    "stage_name"
+   ],
+   "additionalProperties": false,
+   "properties": {
+    "is_deprecated": {
+     "description": "Denotes that this stage is deprecated and is no longer used in the diagram.",
+     "type": "boolean"
+    },
+    "ordinal": {
+     "description": "The sort order of the stage. If no sort orders are specified, the stages will be sorted based on their distance from the starting stage, or alphabetically if the diagram is 'all-to-all'.",
+     "type": "integer"
+    },
+    "stage_name": {
+     "description": "The human readable name of the stage.",
+     "type": "string"
+    },
+    "state": {
+     "description": "The state this stage belongs to. It must match the ones defined in the diagram 'States' field or defaults will be filled in.",
+     "type": "string"
+    },
+    "transitions_to": {
+     "description": "A list of stage names that this stage can transition to. The target stage must exist in the diagram.",
+     "items": {
+      "type": "string"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "CustomState": {
+   "required": [
+    "name"
+   ],
+   "additionalProperties": false,
+   "properties": {
+    "is_end_state": {
+     "description": "Denotes that this state is an end state.",
+     "type": "boolean"
+    },
+    "name": {
+     "description": "The human readable name of the custom state.",
+     "type": "string"
+    },
+    "ordinal": {
+     "description": "The sort order of the state.",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "EnumData": {
+   "required": [
+    "values"
+   ],
+   "additionalProperties": false,
+   "properties": {
+    "values": {
+     "items": {
+      "$ref": "#/definitions/EnumValue"
+     },
+     "type": "array"
+    }
+   },
+   "type": [
+    "object",
+    "null"
+   ]
+  },
+  "EnumValue": {
+   "required": [
+    "key"
+   ],
+   "additionalProperties": false,
+   "properties": {
+    "description": {
+     "type": "string"
+    },
+    "is_deprecated": {
+     "description": "Deprecated enum values may still occur in the data, but should not be used in new data",
+     "type": "boolean"
+    },
+    "key": {
+     "description": "The enum value that actually occurs in the json data",
+     "type": "string"
+    },
+    "name": {
+     "description": "The human readable name of the enum value",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ExtractionData": {
+   "additionalProperties": false,
+   "properties": {
+    "sort_order": {
+     "enum": [
+      "",
+      "id",
+      "modified_date",
+      "created_date"
+     ],
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "Field": {
+   "additionalProperties": false,
+   "properties": {
+    "default_value": {},
+    "description": {
+     "type": "string"
+    },
+    "is_deprecated": {
+     "type": [
+      "boolean",
+      "null"
+     ]
+    },
+    "is_filterable": {
+     "type": [
+      "boolean",
+      "null"
+     ]
+    },
+    "is_groupable": {
+     "type": [
+      "boolean",
+      "null"
+     ]
+    },
+    "is_identifier": {
+     "description": "IsIdentifier indicates that the field can be used to uniquely lookup a record. This is meant for fields that are not the primary key of the record type, for example email in an user.",
+     "type": [
+      "boolean",
+      "null"
+     ]
+    },
+    "is_pii": {
+     "description": "PII fields are fields that contain personally identifiable information, and should be treated with special care. (in particular transformed to is_pii fields in devrev)",
+     "type": [
+      "boolean",
+      "null"
+     ]
+    },
+    "is_required": {
+     "description": "Required fields are required in the domain model of the external system, that is they always exist on the database level",
+     "type": "boolean"
+    },
+    "is_required_on_create": {
+     "description": "IsRequiredOnCreate indicates that the field isn't guaranteed to always exist, but it is required to present when creating new records",
+     "type": [
+      "boolean",
+      "null"
+     ]
+    },
+    "is_sortable": {
+     "type": [
+      "boolean",
+      "null"
+     ]
+    },
+    "is_system": {
+     "description": "System fields can't be set, but are filled in by the system. eg. created_at, updated_at",
+     "type": [
+      "boolean",
+      "null"
+     ]
+    },
+    "name": {
+     "type": "string"
+    }
+   },
+   "type": "object",
+   "allOf": [
+    {
+     "$ref": "#/definitions/FieldTypeData"
+    }
+   ],
+   "oneOf": [
+    {
+     "required": [
+      "type"
+     ],
+     "properties": {
+      "default_value": {
+       "type": "boolean"
+      },
+      "enum": {
+       "type": "object",
+       "not": {}
+      },
+      "float": {
+       "type": "object",
+       "not": {}
+      },
+      "int": {
+       "type": "object",
+       "not": {}
+      },
+      "reference": {
+       "type": "object",
+       "not": {}
+      },
+      "struct": {
+       "type": "object",
+       "not": {}
+      },
+      "text": {
+       "type": "object",
+       "not": {}
+      },
+      "type": {
+       "enum": [
+        "bool"
+       ],
+       "type": "string"
+      }
+     },
+     "type": "object"
+    },
+    {
+     "required": [
+      "type"
+     ],
+     "properties": {
+      "default_value": {
+       "type": "integer"
+      },
+      "enum": {
+       "type": "object",
+       "not": {}
+      },
+      "float": {
+       "type": "object",
+       "not": {}
+      },
+      "int": {
+       "$ref": "#/definitions/IntData",
+       "description": "The specifics of the field if the type is 'int'"
+      },
+      "reference": {
+       "type": "object",
+       "not": {}
+      },
+      "struct": {
+       "type": "object",
+       "not": {}
+      },
+      "text": {
+       "type": "object",
+       "not": {}
+      },
+      "type": {
+       "enum": [
+        "int"
+       ],
+       "type": "string"
+      }
+     },
+     "type": "object"
+    },
+    {
+     "required": [
+      "type"
+     ],
+     "properties": {
+      "default_value": {
+       "type": "number"
+      },
+      "enum": {
+       "type": "object",
+       "not": {}
+      },
+      "float": {
+       "$ref": "#/definitions/FloatData",
+       "description": "The specifics of the field if the type is 'float'"
+      },
+      "int": {
+       "type": "object",
+       "not": {}
+      },
+      "reference": {
+       "type": "object",
+       "not": {}
+      },
+      "struct": {
+       "type": "object",
+       "not": {}
+      },
+      "text": {
+       "type": "object",
+       "not": {}
+      },
+      "type": {
+       "enum": [
+        "float"
+       ],
+       "type": "string"
+      }
+     },
+     "type": "object"
+    },
+    {
+     "required": [
+      "type"
+     ],
+     "properties": {
+      "default_value": {
+       "type": "string"
+      },
+      "enum": {
+       "type": "object",
+       "not": {}
+      },
+      "float": {
+       "type": "object",
+       "not": {}
+      },
+      "int": {
+       "type": "object",
+       "not": {}
+      },
+      "reference": {
+       "type": "object",
+       "not": {}
+      },
+      "struct": {
+       "type": "object",
+       "not": {}
+      },
+      "text": {
+       "$ref": "#/definitions/TextData",
+       "description": "The specifics of the field if the type is 'text'"
+      },
+      "type": {
+       "enum": [
+        "text"
+       ],
+       "type": "string"
+      }
+     },
+     "type": "object"
+    },
+    {
+     "required": [
+      "type"
+     ],
+     "properties": {
+      "enum": {
+       "type": "object",
+       "not": {}
+      },
+      "float": {
+       "type": "object",
+       "not": {}
+      },
+      "int": {
+       "type": "object",
+       "not": {}
+      },
+      "reference": {
+       "type": "object",
+       "not": {}
+      },
+      "struct": {
+       "type": "object",
+       "not": {}
+      },
+      "text": {
+       "type": "object",
+       "not": {}
+      },
+      "type": {
+       "enum": [
+        "rich_text"
+       ],
+       "type": "string"
+      }
+     },
+     "type": "object"
+    },
+    {
+     "required": [
+      "type",
+      "enum"
+     ],
+     "additionalProperties": false,
+     "properties": {
+      "default_value": {
+       "type": "string"
+      },
+      "enum": {
+       "$ref": "#/definitions/EnumData",
+       "description": "The specifics of the field if the type is 'enum'"
+      },
+      "float": {
+       "type": "object",
+       "not": {}
+      },
+      "int": {
+       "type": "object",
+       "not": {}
+      },
+      "reference": {
+       "type": "object",
+       "not": {}
+      },
+      "struct": {
+       "type": "object",
+       "not": {}
+      },
+      "text": {
+       "type": "object",
+       "not": {}
+      },
+      "type": {
+       "enum": [
+        "enum"
+       ],
+       "type": "string"
+      }
+     },
+     "type": "object"
+    },
+    {
+     "required": [
+      "type",
+      "reference"
+     ],
+     "additionalProperties": false,
+     "properties": {
+      "enum": {
+       "type": "object",
+       "not": {}
+      },
+      "float": {
+       "type": "object",
+       "not": {}
+      },
+      "int": {
+       "type": "object",
+       "not": {}
+      },
+      "reference": {
+       "$ref": "#/definitions/ReferenceData",
+       "description": "The specifics of the field if the type is 'reference'"
+      },
+      "struct": {
+       "type": "object",
+       "not": {}
+      },
+      "text": {
+       "type": "object",
+       "not": {}
+      },
+      "type": {
+       "enum": [
+        "reference"
+       ],
+       "type": "string"
+      }
+     },
+     "type": "object"
+    },
+    {
+     "required": [
+      "type",
+      "struct"
+     ],
+     "additionalProperties": false,
+     "properties": {
+      "enum": {
+       "type": "object",
+       "not": {}
+      },
+      "float": {
+       "type": "object",
+       "not": {}
+      },
+      "int": {
+       "type": "object",
+       "not": {}
+      },
+      "reference": {
+       "type": "object",
+       "not": {}
+      },
+      "struct": {
+       "$ref": "#/definitions/StructData",
+       "description": "The specifics of the field if the type is 'struct'"
+      },
+      "text": {
+       "type": "object",
+       "not": {}
+      },
+      "type": {
+       "enum": [
+        "struct"
+       ],
+       "type": "string"
+      }
+     },
+     "type": "object"
+    },
+    {
+     "required": [
+      "type"
+     ],
+     "properties": {
+      "default_value": {
+       "type": "string"
+      },
+      "enum": {
+       "type": "object",
+       "not": {}
+      },
+      "float": {
+       "type": "object",
+       "not": {}
+      },
+      "int": {
+       "type": "object",
+       "not": {}
+      },
+      "reference": {
+       "type": "object",
+       "not": {}
+      },
+      "struct": {
+       "type": "object",
+       "not": {}
+      },
+      "text": {
+       "type": "object",
+       "not": {}
+      },
+      "type": {
+       "enum": [
+        "date"
+       ],
+       "type": "string"
+      }
+     },
+     "type": "object"
+    },
+    {
+     "required": [
+      "type"
+     ],
+     "properties": {
+      "default_value": {
+       "type": "string"
+      },
+      "enum": {
+       "type": "object",
+       "not": {}
+      },
+      "float": {
+       "type": "object",
+       "not": {}
+      },
+      "int": {
+       "type": "object",
+       "not": {}
+      },
+      "reference": {
+       "type": "object",
+       "not": {}
+      },
+      "struct": {
+       "type": "object",
+       "not": {}
+      },
+      "text": {
+       "type": "object",
+       "not": {}
+      },
+      "type": {
+       "enum": [
+        "timestamp"
+       ],
+       "type": "string"
+      }
+     },
+     "type": "object"
+    }
+   ]
+  },
+  "FieldCondition": {
+   "required": [
+    "value",
+    "comparator",
+    "affected_fields",
+    "effect"
+   ],
+   "additionalProperties": false,
+   "properties": {
+    "affected_fields": {
+     "description": "The fields that will be affected by the condition being met.",
+     "items": {
+      "type": "string"
+     },
+     "minItems": 1,
+     "uniqueItems": true,
+     "type": "array"
+    },
+    "comparator": {
+     "description": "The comparator that will be used to compare the controlling field's value against the Value.",
+     "enum": [
+      "eq",
+      "ne",
+      "lt",
+      "lte",
+      "gt",
+      "gte"
+     ],
+     "type": "string"
+    },
+    "effect": {
+     "description": "The effect that will be applied to the affected fields if the condition is met.",
+     "enum": [
+      "require",
+      "show"
+     ],
+     "type": "string"
+    },
+    "value": {
+     "description": "The value of the controlling field that the will be compared against to see if the condition is met."
+    }
+   },
+   "type": "object"
+  },
+  "FieldConditions": {
+   "items": {
+    "$ref": "#/definitions/FieldCondition"
+   },
+   "type": "array"
+  },
+  "FieldTypeData": {
+   "required": [
+    "type"
+   ],
+   "properties": {
+    "collection": {
+     "$ref": "#/definitions/CollectionData",
+     "description": "If collection is set, the field is a 'collection' of the given type. eg a list of enum values"
+    },
+    "enum": {
+     "$ref": "#/definitions/EnumData"
+    },
+    "float": {
+     "$ref": "#/definitions/FloatData"
+    },
+    "int": {
+     "$ref": "#/definitions/IntData"
+    },
+    "reference": {
+     "$ref": "#/definitions/ReferenceData"
+    },
+    "struct": {
+     "$ref": "#/definitions/StructData"
+    },
+    "text": {
+     "$ref": "#/definitions/TextData"
+    },
+    "type": {
+     "description": "The type of the field",
+     "enum": [
+      "bool",
+      "int",
+      "float",
+      "text",
+      "rich_text",
+      "reference",
+      "enum",
+      "date",
+      "timestamp",
+      "struct"
+     ],
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "FloatData": {
+   "additionalProperties": false,
+   "properties": {
+    "max": {
+     "type": "number"
+    },
+    "min": {
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "IntData": {
+   "additionalProperties": false,
+   "properties": {
+    "max": {
+     "type": "integer"
+    },
+    "min": {
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "LoadingData": {
+   "type": "object"
+  },
+  "RecordType": {
+   "required": [
+    "fields"
+   ],
+   "additionalProperties": false,
+   "properties": {
+    "category": {
+     "type": "string"
+    },
+    "conditions": {
+     "additionalProperties": {
+      "$ref": "#/definitions/FieldConditions"
+     },
+     "type": "object"
+    },
+    "description": {
+     "type": "string"
+    },
+    "extraction": {
+     "$ref": "#/definitions/ExtractionData"
+    },
+    "fields": {
+     "description": "The fields of the record type",
+     "additionalProperties": {
+      "$ref": "#/definitions/Field"
+     },
+     "type": "object"
+    },
+    "loading": {
+     "$ref": "#/definitions/LoadingData"
+    },
+    "name": {
+     "description": "The human readable name of the record type",
+     "type": "string"
+    },
+    "stage_diagram": {
+     "$ref": "#/definitions/StageDiagram"
+    }
+   },
+   "type": "object"
+  },
+  "RecordTypeCategory": {
+   "additionalProperties": false,
+   "properties": {
+    "are_transitions_possible": {
+     "description": "Indicates whether a record can move between the record types of this category while preserving its identity",
+     "type": "boolean"
+    },
+    "name": {
+     "description": "The human readable name of the record type category",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ReferenceData": {
+   "required": [
+    "refers_to"
+   ],
+   "additionalProperties": false,
+   "properties": {
+    "is_dynamic_typed": {
+     "type": "boolean"
+    },
+    "refers_to": {
+     "description": "The record types that this reference can refer to",
+     "additionalProperties": {
+      "$ref": "#/definitions/ReferenceDetail"
+     },
+     "type": "object"
+    },
+    "role": {
+     "description": "The parent reference refers to a record that has special ownership over the child",
+     "enum": [
+      "child",
+      "parent"
+     ],
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ReferenceDetail": {
+   "additionalProperties": false,
+   "properties": {
+    "by_field": {
+     "description": "The field in the target record type by which it is referenced. This is assumed to be the primary key if not set",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "StageDiagram": {
+   "required": [
+    "controlling_field",
+    "stages",
+    "starting_stage"
+   ],
+   "additionalProperties": false,
+   "properties": {
+    "controlling_field": {
+     "description": "The field that represents the stage in the external system.",
+     "minLength": 1,
+     "type": "string"
+    },
+    "end_stages": {
+     "description": "A list of stages that are considered to be the end of the stage diagram/workflow.",
+     "items": {
+      "type": "string"
+     },
+     "type": "array"
+    },
+    "no_transitions_defined": {
+     "description": "Denotes that this diagram has no explicit transitions from one stage to another and should be created as an 'all-to-all' diagram.",
+     "type": "boolean"
+    },
+    "stages": {
+     "description": "A map of the stages that should be created in DevRev, the key value must be the identifier of the stage.",
+     "minProperties": 2,
+     "additionalProperties": {
+      "$ref": "#/definitions/CustomStage"
+     },
+     "type": "object"
+    },
+    "starting_stage": {
+     "description": "The stage that the parent record type starts in when it is created.",
+     "minLength": 1,
+     "type": "string"
+    },
+    "states": {
+     "description": "A map of the states/status categories that should be created in DevRev and are expected to be used in the stage diagram. If no explicit states are defined, the default states 'open', 'in_progress' and 'closed' will be used.",
+     "additionalProperties": {
+      "$ref": "#/definitions/CustomState"
+     },
+     "type": "object"
+    }
+   },
+   "type": "object"
+  },
+  "StructData": {
+   "additionalProperties": false,
+   "properties": {
+    "key": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "StructType": {
+   "required": [
+    "fields"
+   ],
+   "additionalProperties": false,
+   "properties": {
+    "fields": {
+     "description": "The fields of the struct type",
+     "additionalProperties": {
+      "$ref": "#/definitions/Field"
+     },
+     "type": "object"
+    },
+    "name": {
+     "description": "The human readable name of the struct type",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "TextData": {
+   "additionalProperties": false,
+   "properties": {
+    "max_length": {
+     "minimum": 0,
+     "type": "integer"
+    },
+    "min_length": {
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  }
+ },
+ "properties": {
+  "record_type_categories": {
+   "additionalProperties": {
+    "$ref": "#/definitions/RecordTypeCategory"
+   },
+   "type": "object"
+  },
+  "record_types": {
+   "description": "The record types in the domain",
+   "additionalProperties": {
+    "$ref": "#/definitions/RecordType"
+   },
+   "type": "object"
+  },
+  "struct_types": {
+   "additionalProperties": {
+    "$ref": "#/definitions/StructType"
+   },
+   "type": "object"
+  }
+ },
+ "type": "object"
+}
