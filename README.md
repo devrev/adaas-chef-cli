@@ -364,6 +364,17 @@ Obtain a PAT-token from the Settings/Account tab of the devorg where you deploy 
 
 `$ chef-cli manage --env prod`
 
+If your org is no in US-East-1, you have to override an environment variable to make sure the tool reaches to the right server, eg:
+
+```bash
+ACTIVE_PARTITION=dvrv-in-1 chef-cli manage --env prod
+```
+where the options are:
+"dvrv-us-1"
+"dvrv-eu-1"
+"dvrv-in-1"
+"dvrv-de-1"
+
 ## Metadata tips
 
 You are required to provide an external_domain_metadata file from your extractor, describing the logical schema of the external system.
