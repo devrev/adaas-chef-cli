@@ -375,6 +375,14 @@ where the options are:
 "dvrv-in-1"
 "dvrv-de-1"
 
+You can also provide a local metadata file to the command using the '-m' flag for example: `chef-cli manage --end dev -m metadata.json`, this enables to use:
+
+- raw jq transformations using an external field as input. (This is an experimental feature)
+
+- filling in example input data for trying out the transformation.
+
+In this case it is not validated that the local file is the same as the one submitted by the snapin, this has to be ensured by you.
+
 ## Metadata tips
 
 You are required to provide an external_domain_metadata file from your extractor, describing the logical schema of the external system.
