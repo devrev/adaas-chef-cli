@@ -35,6 +35,9 @@ Your extractor snapin will be required to provide this metadata as an extracted 
 To check the metadata for internal consistency, you should use the following command after every step:
 
 `$ chef-cli validate-metadata < metadata.json`
+
+<!-- If there is no output does it mean that crafted metadata file is valid? -->
+
 This will output any problems there may be with the metadata file.
 
 ## Step-by-step approach to crafting the metadata declaration
@@ -61,6 +64,8 @@ If the snap-in is extracting issues and comments, a good starting point to decla
   }
 }
 ```
+
+<!-- We should think of enforcing this somehow in ADaaS library. -->
 
 Although the declaration of record types is arbitrary, they must match the `item_type` field in the artifacts you will upload.
 
@@ -146,6 +151,8 @@ an issue that can be moved to become a problem in the external system.
 ```
 
 5. Declare fields for each record type:
+
+<!-- Maybe mention that extracted data in artifacts must be normalized and link to that section on Data extraction page. -->
 
 Fields' keys must match what is actually found in the extracted data in the artifacts.
 
@@ -369,6 +376,7 @@ If your org is no in US-East-1, you have to override an environment variable to 
 ```bash
 ACTIVE_PARTITION=dvrv-in-1 chef-cli manage --env prod
 ```
+
 where the options are:
 "dvrv-us-1"
 "dvrv-eu-1"
