@@ -134,6 +134,62 @@
                 "rca": {
                     "type": "rich_text",
                     "name": "Root cause analysis"
+                },
+                "status": {
+                    "name": "Status",
+                    "is_required": true,
+                    "type": "enum",
+                    "enum": {
+                        "values": [
+                            {
+                                "key": "detected",
+                                "name": "Detected"
+                            },
+                            {
+                                "key": "mitigated",
+                                "name": "Mitigated"
+                            },
+                            {
+                                "key": "rca_ready",
+                                "name": "RCA Ready"
+                            },
+                            {
+                                "key": "archived",
+                                "name": "Archived"
+                            }
+                        ]
+                    }
+                }
+            },
+            "stage_diagram": {
+                "controlling_field": "status",
+                "starting_stage": "detected",
+                "stages": {
+                    "detected": {
+                        "stage_name": "Detected",
+                        "transitions_to": [
+                            "mitigated",
+                            "archived",
+                            "rca_ready"
+                        ]
+                    },
+                    "mitigated": {
+                        "stage_name": "Mitigated",
+                        "transitions_to": [
+                            "archived",
+                            "detected"
+                        ]
+                    },
+                    "rca_ready": {
+                        "stage_name": "RCA Ready",
+                        "transitions_to": [
+                            "archived"
+                        ]
+                    },
+                    "archived": {
+                        "stage_name": "Archived",
+                        "transitions_to": []
+                    }
                 }
             }
         },
@@ -151,6 +207,46 @@
                     "text": {
                         "max_length": 99,
                         "min_length": 4
+                    }
+                }
+            }
+        },
+        "knowledge_page": {
+            "name": "Page",
+            "fields": {
+                "content": {
+                    "type": "rich_text"
+                },
+                "owner": {
+                    "is_required": true,
+                    "type": "reference",
+                    "reference": {
+                        "refers_to": {
+                            "#record:user": {}
+                        }
+                    }
+                },
+                "accessible_to": {
+                    "type": "permission",
+                    "collection": {},
+                    "permission": {
+                        "role": {
+                            "values": [
+                                {
+                                    "key": "viewer",
+                                    "name": "Viewer"
+                                },
+                                {
+                                    "key": "editor",
+                                    "name": "Editor"
+                                }
+                            ]
+                        },
+                        "member_id": {
+                            "refers_to": {
+                                "#record:user": {}
+                            }
+                        }
                     }
                 }
             }

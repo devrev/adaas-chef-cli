@@ -161,12 +161,14 @@ The supported types are:
 - `enum`: A string from a predefined set of values with the optional human-readable names for each value.
 - `date`,
 - `timestamp`,
-- `struct`.
+- `struct`
+
+- `permission`: A special strucuture associating a reference to an user-like record type (the field `member_id`) with an enum value that can be interpreted as the role or permission level associated with that user. This is useful in a few cases when mapping fields with the same type in devrev.
 
 If the external system supports custom fields, the set of custom fields in each record type you wish to extract must be
 declared too.
 
-Enum fields' set of possible values can often be customizable. A good practice is to retrieve the set of possible values
+Enum fields set of possible values can often be customizable. A good practice is to retrieve the set of possible values
 for all enum fields from the external system's APIs in each sync run.
 
 `ID` (primary key) of the record, `created_date`, and `modified_date` must not be declared.
@@ -291,6 +293,72 @@ If the field is array in the extracted data, it is still typed with the one of t
 }
 ```
 
+8. Consider state transitions
+
+If an external record type has some concept of states, between which only certain transitions are possible, (eg to move to the 'resolved' status, an issue first has to be 'in_testing' and similar business rules), you can declare these in the metadata too.
+
+This will allow us to create a matching 'stage diagram' (a collection of stages and their permitted transitions) in DevRev, which will usually allow a much simpler import and a closer preservation of the external data than needing to map to DevRev's builtin (stock) stages.
+
+This is especially important if two-way sync will eventually be needed, as setting the transitions up correctly ensures that the transitions the record undergo in DevRev will be able to be replicated in the external system.
+
+To declare this in the metadata, ensure the status is represented in the extracted data as an enum field, and then declare the allowed transitions (which you might have to retrieve from an API at runtime, if they are also customized).
+
+```json
+{
+  "fields": {
+    "status": {
+      "name": "Status",
+      "is_required": true,
+      "type": "enum",
+      "enum": {
+        "values": [
+          {
+            "key": "detected",
+            "name": "Detected"
+          },
+          {
+            "key": "mitigated",
+            "name": "Mitigated"
+          },
+          {
+            "key": "rca_ready",
+            "name": "RCA Ready"
+          },
+          {
+            "key": "archived",
+            "name": "Archived"
+          }
+        ]
+      }
+    }
+  },
+  "stage_diagram": {
+    "controlling_field": "status",
+    "starting_stage": "detected",
+    "stages": {
+      "detected": {
+        "stage_name": "Detected",
+        "transitions_to": ["mitigated", "archived", "rca_ready"]
+      },
+      "mitigated": {
+        "stage_name": "Mitigated",
+        "transitions_to": ["archived", "detected"]
+      },
+      "rca_ready": {
+        "stage_name": "RCA Ready",
+        "transitions_to": ["archived"]
+      },
+      "archived": {
+        "stage_name": "Archived",
+        "transitions_to": []
+      }
+    }
+  }
+}
+```
+
+In the above example, the status field is declared the controlling field of the stage diagram, which then specifies the transitions for each stage.
+
 ## Normalize data
 
 During the data extraction phase, the snap-in uploads batches of extracted items (the recommended batch size is 2000 items) formatted in JSONL
@@ -369,11 +437,28 @@ If your org is no in US-East-1, you have to override an environment variable to 
 ```bash
 ACTIVE_PARTITION=dvrv-in-1 chef-cli manage --env prod
 ```
+
 where the options are:
 "dvrv-us-1"
 "dvrv-eu-1"
 "dvrv-in-1"
 "dvrv-de-1"
+
+The first function of the local UI is to assemble a 'blueprint' for concrete import running in the test-org, allowing the mapping to be tested out and evaluated.
+
+## Use the local UI to create an initial domain mappings
+
+The final artifact of the recipe creation process is the initial_domain_mappings.json, which has to embedded in the extractor.
+
+This mapping, unlike the recipe blueprint of a concrete import, can contain multiple options for each external record type from which the end-user might choose (for example allow 'task' from an external system to map either to issue or ticket in devrev), and it can contain also mappings that apply to a record type category. When the user runs a new import, and the extractor reports in its metadata record types belonging to this category, that are not directly mapped in the initial domain mappings, the recipe manager will apply the per-category default to them.
+
+After the blueprint of the test import was completed, the 'install in this org' button takes you to the initial domain mapping creation screen, where you can 'merge' the blueprint to the existing initial mappings of the org.
+
+By repeating this process (run a new import, create a different configuration, merge to the initial mappings), you can create an initial mapping that contains multiple options for the user to choose from.
+
+Finally the Export button allows you to retrieve the initial_domain_mapping.json.
+
+## Tip: use local metadata in the local UI
 
 You can also provide a local metadata file to the command using the '-m' flag for example: `chef-cli manage --end dev -m metadata.json`, this enables to use:
 

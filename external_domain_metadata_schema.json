@@ -223,6 +223,10 @@
        "type": "object",
        "not": {}
       },
+      "permission": {
+       "type": "object",
+       "not": {}
+      },
       "reference": {
        "type": "object",
        "not": {}
@@ -264,6 +268,10 @@
        "$ref": "#/definitions/IntData",
        "description": "The specifics of the field if the type is 'int'"
       },
+      "permission": {
+       "type": "object",
+       "not": {}
+      },
       "reference": {
        "type": "object",
        "not": {}
@@ -302,6 +310,10 @@
        "description": "The specifics of the field if the type is 'float'"
       },
       "int": {
+       "type": "object",
+       "not": {}
+      },
+      "permission": {
        "type": "object",
        "not": {}
       },
@@ -346,6 +358,10 @@
        "type": "object",
        "not": {}
       },
+      "permission": {
+       "type": "object",
+       "not": {}
+      },
       "reference": {
        "type": "object",
        "not": {}
@@ -381,6 +397,10 @@
        "not": {}
       },
       "int": {
+       "type": "object",
+       "not": {}
+      },
+      "permission": {
        "type": "object",
        "not": {}
       },
@@ -427,6 +447,10 @@
        "type": "object",
        "not": {}
       },
+      "permission": {
+       "type": "object",
+       "not": {}
+      },
       "reference": {
        "type": "object",
        "not": {}
@@ -467,6 +491,10 @@
        "type": "object",
        "not": {}
       },
+      "permission": {
+       "type": "object",
+       "not": {}
+      },
       "reference": {
        "$ref": "#/definitions/ReferenceData",
        "description": "The specifics of the field if the type is 'reference'"
@@ -504,6 +532,10 @@
        "not": {}
       },
       "int": {
+       "type": "object",
+       "not": {}
+      },
+      "permission": {
        "type": "object",
        "not": {}
       },
@@ -548,6 +580,10 @@
        "type": "object",
        "not": {}
       },
+      "permission": {
+       "type": "object",
+       "not": {}
+      },
       "reference": {
        "type": "object",
        "not": {}
@@ -589,6 +625,10 @@
        "type": "object",
        "not": {}
       },
+      "permission": {
+       "type": "object",
+       "not": {}
+      },
       "reference": {
        "type": "object",
        "not": {}
@@ -604,6 +644,47 @@
       "type": {
        "enum": [
         "timestamp"
+       ],
+       "type": "string"
+      }
+     },
+     "type": "object"
+    },
+    {
+     "required": [
+      "type"
+     ],
+     "properties": {
+      "enum": {
+       "type": "object",
+       "not": {}
+      },
+      "float": {
+       "type": "object",
+       "not": {}
+      },
+      "int": {
+       "type": "object",
+       "not": {}
+      },
+      "permission": {
+       "$ref": "#/definitions/PermissionData"
+      },
+      "reference": {
+       "type": "object",
+       "not": {}
+      },
+      "struct": {
+       "type": "object",
+       "not": {}
+      },
+      "text": {
+       "type": "object",
+       "not": {}
+      },
+      "type": {
+       "enum": [
+        "permission"
        ],
        "type": "string"
       }
@@ -680,6 +761,9 @@
     "int": {
      "$ref": "#/definitions/IntData"
     },
+    "permission": {
+     "$ref": "#/definitions/PermissionData"
+    },
     "reference": {
      "$ref": "#/definitions/ReferenceData"
     },
@@ -733,6 +817,19 @@
    "type": "object"
   },
   "LoadingData": {
+   "type": "object"
+  },
+  "PermissionData": {
+   "description": "A value describing access control, associating a reference (member_id) with a role.",
+   "additionalProperties": false,
+   "properties": {
+    "member_id": {
+     "$ref": "#/definitions/ReferenceData"
+    },
+    "role": {
+     "$ref": "#/definitions/EnumData"
+    }
+   },
    "type": "object"
   },
   "RecordType": {
@@ -830,8 +927,7 @@
   "StageDiagram": {
    "required": [
     "controlling_field",
-    "stages",
-    "starting_stage"
+    "stages"
    ],
    "additionalProperties": false,
    "properties": {
@@ -840,15 +936,8 @@
      "minLength": 1,
      "type": "string"
     },
-    "end_stages": {
-     "description": "A list of stages that are considered to be the end of the stage diagram/workflow.",
-     "items": {
-      "type": "string"
-     },
-     "type": "array"
-    },
     "no_transitions_defined": {
-     "description": "Denotes that this diagram has no explicit transitions from one stage to another and should be created as an 'all-to-all' diagram.",
+     "description": "Denotes that this diagram has no explicit transitions from one stage to another and should be created as an 'all-to-all' diagram. If this is set to true, any explicitly defined transitions will be ignored.",
      "type": "boolean"
     },
     "stages": {
@@ -860,7 +949,7 @@
      "type": "object"
     },
     "starting_stage": {
-     "description": "The stage that the parent record type starts in when it is created.",
+     "description": "The stage that the parent record type starts in when it is created. This field is mandatory in case 'states' or stage transitions are provided. Otherwise it can be omitted and the (alphabetically) first open stage will be selected as the starting stage.",
      "minLength": 1,
      "type": "string"
     },
