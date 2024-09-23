@@ -335,29 +335,49 @@ To declare this in the metadata, ensure the status is represented in the extract
   "stage_diagram": {
     "controlling_field": "status",
     "starting_stage": "detected",
+    "no_transitions_defined": false,
     "stages": {
       "detected": {
         "stage_name": "Detected",
-        "transitions_to": ["mitigated", "archived", "rca_ready"]
+        "transitions_to": ["mitigated", "archived", "rca_ready"],
+        "state": "new"
       },
       "mitigated": {
         "stage_name": "Mitigated",
-        "transitions_to": ["archived", "detected"]
+        "transitions_to": ["archived", "detected"],
+        "state": "work_in_progress"
       },
       "rca_ready": {
         "stage_name": "RCA Ready",
-        "transitions_to": ["archived"]
+        "transitions_to": ["archived"],
+        "state": "work_in_progress"
       },
       "archived": {
         "stage_name": "Archived",
-        "transitions_to": []
+        "transitions_to": [],
+        "state": "completed"
       }
+    },
+    "states": {
+      "new": {
+        "name": "New"
+      },
+      "work_in_progress": {
+        "name": "Work in Progress"
+      },
+      "completed": {
+        "name": "Completed",
+        "is_end_state": true
+      },
     }
   }
 }
 ```
 
-In the above example, the status field is declared the controlling field of the stage diagram, which then specifies the transitions for each stage.
+In the above example, the status field is declared the controlling field of the stage diagram, which then specifies the transitions for each stage.  
+It is possible that the status field has no explicit transitions defined but one would still like to create a stage diagram in DevRev. In that case you should use set the `no_transitions_defined` field to `true`, which will create a diagram where all the defined stages can transition to each other.  
+The external system might have a way to categorize statuses (such as status categories in Jira). These can also be included in the diagram metadata (`states` in the example above) which will create them in DevRev and they can be referenced by the stages. This is entirely optional and in case the `states` field is not provided, default DevRev states will be used, those being `open`, `in_progress` and `closed`. If there is a way, the developer can categorize the stages to one of these three, or leave it up to the end user.  
+The `starting_stage` field defines the starting stage of the diagram, in which all new instances of the object will be created. This data should always be provided if available, otherwise the starting stage will be selected alphabetically.
 
 ## Normalize data
 
