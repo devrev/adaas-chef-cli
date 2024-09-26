@@ -488,6 +488,16 @@ You can also provide a local metadata file to the command using the '-m' flag fo
 
 In this case it is not validated that the local file is the same as the one submitted by the snapin, this has to be ensured by you.
 
+## Test an import with initial mapping using the in-app UI.
+
+Once the initial mappings are prepared and, any new import in the org (with the same snapin slug and import slug) where they are installed will use them. The end-users can influence the recipe blueprint that gets created for the sync unit trough the mapping screen in the UI, where they can make record-type filtering, mapping, fine grained filtering, low-code field and value mapping, and finally custom field filtering.
+
+Their decisions are constrained by the choices provided in the initial domain mappings. Currently the low-code UI offers limited insight into the mappings and their reasons, and in some cases, mismatches arise when something that worked in chef-cli doesn't offer the right options to the user, or not all fields that should be resolved are solved. To assist debugging such cases, chef-cli provides a command to extract the description of the low-code decisions that are asked in the UI. Please provide this to us when reporting an issue with how the end-user mapping UI behaves.
+
+```bash
+chef-cli low-code --env prod > low_code.json`
+```
+
 ## Metadata tips
 
 You are required to provide an external_domain_metadata file from your extractor, describing the logical schema of the external system.
