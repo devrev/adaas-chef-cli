@@ -417,7 +417,7 @@ All other fields are contained within the `data` attribute.
 Extracted artifacts can be validated with the `chef-cli` using the following command:
 
 ```bash
-$ chef-cli validate-metadata -m external_domain_metadata.json -r issue < extractor_issues_2.json
+$ chef-cli validate-data -m external_domain_metadata.json -r issue < extractor_issues_2.json
 ```
 
 You can also generate example data to show the format the data has to be normalized to, using:
