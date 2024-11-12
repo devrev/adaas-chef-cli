@@ -49,7 +49,7 @@ This will output any problems there may be with the metadata file.
 
 2. Run `$ chef-cli infer-metadata example_data_directory`, replacing example_data_directory with the relative path to this directory.
 
-3. Inspect the generated metadata, check if its field types are correct (see below on the detailed description of the supported field types), and condier the todo's and suggestions the tool generates.
+3. Inspect the generated metadata, check if its field types are correct (see below on the detailed description of the supported field types), and consider the todo-s and suggestions the tool generates.
 
 Tips for ther best results:
 
