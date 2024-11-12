@@ -37,6 +37,29 @@ To check the metadata for internal consistency, you should use the following com
 `$ chef-cli validate-metadata < metadata.json`
 This will output any problems there may be with the metadata file.
 
+
+## Getting a good starting point metadata using the infer-metadata command
+
+`$ chef-cli infer-metadata example_data_directory > metadata.json`
+
+1. Collect example data from the external system, and place them in a directory. Each file should:
+  - Contain the same type of records, named after their type.
+  - Have .json or .jsonl extension, for example `issues.json`
+  - Contain either a single json array of objects, or newline-separated objects.
+
+2. Run `$ chef-cli infer-metadata example_data_directory`, replacing example_data_directory with the relative path to this directory.
+
+3. Inspect the generated metadata, check if its field types are correct (see below on the detailed description of the supported field types), and condier the todo's and suggestions the tool generates.
+
+Tips for ther best results:
+
+	- It is recommended to provide 10-100 examples (but definitely not more than 1000) of each record type to get a good guess. (too few examples may result in not all relevant pattern being detected, too many examples may result in low performance).
+  - The logically distinct fields of the record should be separate keys on the top-level.
+  - It is ideal if example data is referentially consistent, allowing us to guess what field refers to what by comparing the sets of IDs. This means it is better to extract a complete but small set of data, instead of sampling randomly from a system with a lot of data.
+  - The IDs should be strings, not numbers.
+
+This example metadata can be used to prototype initial domain mappings (by running a sync with it) and to generate example normalized data, but it is still just a guess: It has to be reviewed and refined.
+
 ## Step-by-step approach to crafting the metadata declaration
 
 Since crafting metadata declaration in the form of an `external_domain_metadata.json` file can be a tedious process, a step-by-step
@@ -450,12 +473,12 @@ Obtain a PAT-token from the Settings/Account tab of the devorg where you deploy 
 
 ## Use the local UI to create a recipe blueprint for your initial import:
 
-`$ chef-cli manage --env prod`
+`$ chef-cli configure-mappings --env prod`
 
 If your org is no in US-East-1, you have to override an environment variable to make sure the tool reaches to the right server, eg:
 
 ```bash
-ACTIVE_PARTITION=dvrv-in-1 chef-cli manage --env prod
+ACTIVE_PARTITION=dvrv-in-1 chef-cli configure-mappings --env prod
 ```
 
 where the options are:
@@ -465,6 +488,7 @@ where the options are:
 "dvrv-de-1"
 
 The first function of the local UI is to assemble a 'blueprint' for concrete import running in the test-org, allowing the mapping to be tested out and evaluated.
+After it is used for the import, the mappings become immutable, but the chef-cli UI offers a button to make a draft clone, which can be edited again for refinements.
 
 ## Use the local UI to create an initial domain mappings
 
@@ -480,7 +504,7 @@ Finally the Export button allows you to retrieve the initial_domain_mapping.json
 
 ## Tip: use local metadata in the local UI
 
-You can also provide a local metadata file to the command using the '-m' flag for example: `chef-cli manage --end dev -m metadata.json`, this enables to use:
+You can also provide a local metadata file to the command using the '-m' flag for example: `chef-cli configure-mappings --end dev -m metadata.json`, this enables to use:
 
 - raw jq transformations using an external field as input. (This is an experimental feature)
 

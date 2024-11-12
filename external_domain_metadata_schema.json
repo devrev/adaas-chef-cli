@@ -192,6 +192,13 @@
       "null"
      ]
     },
+    "is_write_only": {
+     "description": "Fields that are write only should only be written to. External fields that are write only are only mapped in the reverse direction, while devrev fields that are write only are only mapped in the forward direction.",
+     "type": [
+      "boolean",
+      "null"
+     ]
+    },
     "name": {
      "type": "string"
     }
