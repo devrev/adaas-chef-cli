@@ -53,7 +53,7 @@ This will output any problems there may be with the metadata file.
 
 Tips for ther best results:
 
-	- It is recommended to provide 10-100 examples (but definitely not more than 1000) of each record type to get a good guess. (too few examples may result in not all relevant pattern being detected, too many examples may result in low performance).
+- It is recommended to provide 10-100 examples (but definitely not more than 1000) of each record type to get a good guess. (too few examples may result in not all relevant pattern being detected, too many examples may result in low performance).
   - The logically distinct fields of the record should be separate keys on the top-level.
   - It is ideal if example data is referentially consistent, allowing us to guess what field refers to what by comparing the sets of IDs. This means it is better to extract a complete but small set of data, instead of sampling randomly from a system with a lot of data.
   - The IDs should be strings, not numbers.
