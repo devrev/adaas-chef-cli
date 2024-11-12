@@ -40,14 +40,14 @@ This will output any problems there may be with the metadata file.
 
 ## Getting a good starting point metadata using the infer-metadata command
 
-`$ chef-cli example_data_directory > metadata.json`
+`$ chef-cli infer-metadata example_data_directory > metadata.json`
 
 1. Collect example data from the external system, and place them in a directory. Each file should:
   - Contain the same type of records, named after their type.
   - Have .json or .jsonl extension, for example `issues.json`
   - Contain either a single json array of objects, or newline-separated objects.
 
-2. Run `$ chef-cli example_data_directory`, replacing example_data_directory with the relative path to this directory.
+2. Run `$ chef-cli infer-metadata example_data_directory`, replacing example_data_directory with the relative path to this directory.
 
 3. Inspect the generated metadata, check if its field types are correct (see below on the detailed description of the supported field types), and condier the todo's and suggestions the tool generates.
 
@@ -56,9 +56,9 @@ Tips for ther best results:
 	- It is recommended to provide 10-100 examples (but definitely not more than 1000) of each record type to get a good guess. (too few examples may result in not all relevant pattern being detected, too many examples may result in low performance).
   - The logically distinct fields of the record should be separate keys on the top-level.
   - It is ideal if example data is referentially consistent, allowing us to guess what field refers to what by comparing the sets of IDs. This means it is better to extract a complete but small set of data, instead of sampling randomly from a system with a lot of data.
-  - The should be strings, not numbers.
+  - The IDs should be strings, not numbers.
 
-This example metadata can be used to prototype initial domain mappings (by running a sync with it) and to generate example normalized data, but it is still just a guess: It has to bve reviewed and refined.
+This example metadata can be used to prototype initial domain mappings (by running a sync with it) and to generate example normalized data, but it is still just a guess: It has to be reviewed and refined.
 
 ## Step-by-step approach to crafting the metadata declaration
 
