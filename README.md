@@ -413,7 +413,7 @@ Item types defined when uploading extracted data must validate the declarations 
 Extracted data must be normalized.
 
 - Null values: All fields without a value should either be omitted or set to null. For example, if an external system provides values such as "", -1 for missing values, those must be set to null.
-- Timestamps: Full-precision timestamps should be formatted as RFC3999 (`1972-03-29T22:04:47+01:00`), and dates should be just `2020-12-31`.
+- Timestamps: Full-precision timestamps should be formatted as RFC3399 (`1972-03-29T22:04:47+01:00`), and dates should be just `2020-12-31`.
 - References: references must be strings, not numbers or objects.
 - Number fields must be valid JSON numbers (not strings)
 - Multiselect fields must be provided as an array (not CSV)
@@ -453,9 +453,24 @@ $ echo '{}' | chef-cli fuzz-extracted -r issue -m external_domain_metadata.json 
 
 This will reach 'waiting for user input' stage. Wait there.
 
+## Add your token as an environment variable:
+
+Obtain a PAT-token from the Settings/Account tab of the devorg where you deploy your snapin, and export is at DEVREV_TOKEN
+
 ## Initialize the context of the sync:
 
-To allow the cli to work in the context of that sync, you have to provide its identifying properties in an environment variable (replacing the values based on the logs of your running import)
+To allow the cli to work in the context of that sync, you have to provide its identifying properties in an environment variable.
+The recommended method is to run:
+```bash
+chef-cli ctx switch --env prod
+```
+
+This will print the list of airdrop imports in the org. Select the one you like by running
+```bash
+$ eval $(chef-cli ctx switch --env --prod --id <the id you choose>); chef-cli ctx show
+```
+
+If this method doesn't work, you can manually export the variable (replacing the values based on the logs of your running import):
 
 ```bash
 export AIRDROP_CONTEXT='{"run_id":"1","mode":"initial","connection_id":"x","migration_unit_id":"0716","dev_org_id":"DEV-1kA79wWrRR","dev_user_id":"DEVU-1","source_id":"07-16","source_type":"ADaaS","source_unit_id":"x","source_unit_name":"x","import_slug":"x","snap_in_slug":"x"}'
@@ -466,10 +481,6 @@ Or you can use the interactive helper of the cli:
 ```bash
 $ eval $(chef-cli ctx init); chef-cli ctx show > ctx.json
 ```
-
-## Add your token as an environment variable:
-
-Obtain a PAT-token from the Settings/Account tab of the devorg where you deploy your snapin, and export is at DEVREV_TOKEN
 
 ## Use the local UI to create a recipe blueprint for your initial import:
 
@@ -489,6 +500,10 @@ where the options are:
 
 The first function of the local UI is to assemble a 'blueprint' for concrete import running in the test-org, allowing the mapping to be tested out and evaluated.
 After it is used for the import, the mappings become immutable, but the chef-cli UI offers a button to make a draft clone, which can be edited again for refinements.
+
+If you are also creating devrev -> external sync, use 
+
+`$ chef-cli configure-mappings --env prod --reverse`, which enabled mapping in both directions.
 
 ## Use the local UI to create an initial domain mappings
 
