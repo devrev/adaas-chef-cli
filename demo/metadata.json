@@ -1,20 +1,11 @@
 {
+    "schema_version": "v0.2.0",
     "record_types": {
         "comment": {
             "fields": {
                 "body": {
                     "is_required": true,
                     "type": "rich_text"
-                },
-                "parent": {
-                    "is_required": true,
-                    "type": "reference",
-                    "reference": {
-                        "refers_to": {
-                            "#record:issue": {}
-                        },
-                        "role": "parent"
-                    }
                 },
                 "by": {
                     "is_required": true,
@@ -24,15 +15,35 @@
                             "#record:user": {}
                         }
                     }
+                },
+                "parent": {
+                    "is_required": true,
+                    "type": "reference",
+                    "reference": {
+                        "refers_to": {
+                            "#record:issue": {}
+                        },
+                        "reference_type": "parent"
+                    }
                 }
             },
-            "loading": {}
+            "is_loadable": true
         },
-        "issue": {
+        "incident": {
+            "name": "Incident Report",
             "fields": {
                 "actual_close_date": {
                     "name": "Closed at",
                     "type": "timestamp"
+                },
+                "creator": {
+                    "is_required": true,
+                    "type": "reference",
+                    "reference": {
+                        "refers_to": {
+                            "#record:user": {}
+                        }
+                    }
                 },
                 "owner": {
                     "is_required": true,
@@ -43,7 +54,109 @@
                         }
                     }
                 },
+                "rca": {
+                    "name": "Root cause analysis",
+                    "type": "rich_text"
+                },
+                "severity": {
+                    "name": "Severity",
+                    "is_required": true,
+                    "type": "enum",
+                    "enum": {
+                        "values": [
+                            {
+                                "key": "fatal"
+                            },
+                            {
+                                "key": "severe"
+                            },
+                            {
+                                "key": "minor"
+                            }
+                        ]
+                    }
+                },
+                "status": {
+                    "name": "Status",
+                    "is_required": true,
+                    "type": "enum",
+                    "enum": {
+                        "values": [
+                            {
+                                "key": "detected",
+                                "name": "Detected"
+                            },
+                            {
+                                "key": "mitigated",
+                                "name": "Mitigated"
+                            },
+                            {
+                                "key": "rca_ready",
+                                "name": "RCA Ready"
+                            },
+                            {
+                                "key": "archived",
+                                "name": "Archived"
+                            }
+                        ]
+                    }
+                },
+                "summary": {
+                    "name": "Summary",
+                    "is_required": true,
+                    "type": "text"
+                }
+            },
+            "category": "work",
+            "stage_diagram": {
+                "controlling_field": "status",
+                "stages": {
+                    "archived": {
+                        "transitions_to": []
+                    },
+                    "detected": {
+                        "transitions_to": [
+                            "mitigated",
+                            "archived",
+                            "rca_ready"
+                        ]
+                    },
+                    "mitigated": {
+                        "transitions_to": [
+                            "archived",
+                            "detected"
+                        ]
+                    },
+                    "rca_ready": {
+                        "transitions_to": [
+                            "archived"
+                        ]
+                    }
+                },
+                "starting_stage": "detected"
+            }
+        },
+        "issue": {
+            "fields": {
+                "actual_close_date": {
+                    "name": "Closed at",
+                    "type": "timestamp"
+                },
                 "creator": {
+                    "is_required": true,
+                    "type": "reference",
+                    "reference": {
+                        "refers_to": {
+                            "#record:user": {}
+                        }
+                    }
+                },
+                "headline": {
+                    "name": "Headline",
+                    "is_required": true,
+                    "type": "text"
+                },
+                "owner": {
                     "is_required": true,
                     "type": "reference",
                     "reference": {
@@ -72,164 +185,23 @@
                 },
                 "target_close_date": {
                     "type": "date"
-                },
-                "headline": {
-                    "name": "Headline",
-                    "is_required": true,
-                    "type": "text"
                 }
             },
-            "loading": {},
+            "is_loadable": true,
             "category": "work"
-        },
-        "incident": {
-            "name": "Incident Report",
-            "category": "work",
-            "fields": {
-                "actual_close_date": {
-                    "name": "Closed at",
-                    "type": "timestamp"
-                },
-                "owner": {
-                    "is_required": true,
-                    "type": "reference",
-                    "reference": {
-                        "refers_to": {
-                            "#record:user": {}
-                        }
-                    }
-                },
-                "creator": {
-                    "is_required": true,
-                    "type": "reference",
-                    "reference": {
-                        "refers_to": {
-                            "#record:user": {}
-                        }
-                    }
-                },
-                "severity": {
-                    "name": "Severity",
-                    "is_required": true,
-                    "type": "enum",
-                    "enum": {
-                        "values": [
-                            {
-                                "key": "fatal"
-                            },
-                            {
-                                "key": "severe"
-                            },
-                            {
-                                "key": "minor"
-                            }
-                        ]
-                    }
-                },
-                "summary": {
-                    "is_required": true,
-                    "type": "text",
-                    "name": "Summary"
-                },
-                "rca": {
-                    "type": "rich_text",
-                    "name": "Root cause analysis"
-                },
-                "status": {
-                    "name": "Status",
-                    "is_required": true,
-                    "type": "enum",
-                    "enum": {
-                        "values": [
-                            {
-                                "key": "detected",
-                                "name": "Detected"
-                            },
-                            {
-                                "key": "mitigated",
-                                "name": "Mitigated"
-                            },
-                            {
-                                "key": "rca_ready",
-                                "name": "RCA Ready"
-                            },
-                            {
-                                "key": "archived",
-                                "name": "Archived"
-                            }
-                        ]
-                    }
-                }
-            },
-            "stage_diagram": {
-                "controlling_field": "status",
-                "starting_stage": "detected",
-                "stages": {
-                    "detected": {
-                        "stage_name": "Detected",
-                        "transitions_to": [
-                            "mitigated",
-                            "archived",
-                            "rca_ready"
-                        ]
-                    },
-                    "mitigated": {
-                        "stage_name": "Mitigated",
-                        "transitions_to": [
-                            "archived",
-                            "detected"
-                        ]
-                    },
-                    "rca_ready": {
-                        "stage_name": "RCA Ready",
-                        "transitions_to": [
-                            "archived"
-                        ]
-                    },
-                    "archived": {
-                        "stage_name": "Archived",
-                        "transitions_to": []
-                    }
-                }
-            }
-        },
-        "user": {
-            "fields": {
-                "phone": {
-                    "type": "struct",
-                    "struct": {
-                        "key": "phone_number"
-                    }
-                },
-                "name": {
-                    "is_required": true,
-                    "type": "text",
-                    "text": {
-                        "max_length": 99,
-                        "min_length": 4
-                    }
-                }
-            }
         },
         "knowledge_page": {
             "name": "Page",
             "fields": {
-                "content": {
-                    "type": "rich_text"
-                },
-                "owner": {
-                    "is_required": true,
-                    "type": "reference",
-                    "reference": {
-                        "refers_to": {
-                            "#record:user": {}
-                        }
-                    }
-                },
                 "accessible_to": {
                     "type": "permission",
                     "collection": {},
                     "permission": {
+                        "member_id": {
+                            "refers_to": {
+                                "#record:user": {}
+                            }
+                        },
                         "role": {
                             "values": [
                                 {
@@ -241,12 +213,37 @@
                                     "name": "Editor"
                                 }
                             ]
-                        },
-                        "member_id": {
-                            "refers_to": {
-                                "#record:user": {}
-                            }
                         }
+                    }
+                },
+                "content": {
+                    "type": "rich_text"
+                },
+                "owner": {
+                    "is_required": true,
+                    "type": "reference",
+                    "reference": {
+                        "refers_to": {
+                            "#record:user": {}
+                        }
+                    }
+                }
+            }
+        },
+        "user": {
+            "fields": {
+                "name": {
+                    "is_required": true,
+                    "type": "text",
+                    "text": {
+                        "min_length": 4,
+                        "max_length": 99
+                    }
+                },
+                "phone": {
+                    "type": "struct",
+                    "struct": {
+                        "key": "phone_number"
                     }
                 }
             }
@@ -256,15 +253,15 @@
         "phone_number": {
             "name": "Phone number",
             "fields": {
-                "country_code": {
-                    "type": "text"
-                },
                 "area_code": {
                     "type": "text"
                 },
+                "country_code": {
+                    "type": "text"
+                },
                 "number": {
-                    "type": "text",
-                    "is_required": true
+                    "is_required": true,
+                    "type": "text"
                 }
             }
         }

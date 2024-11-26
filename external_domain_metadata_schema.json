@@ -20,25 +20,10 @@
    "type": "object"
   },
   "CustomStage": {
-   "required": [
-    "stage_name"
-   ],
    "additionalProperties": false,
    "properties": {
-    "is_deprecated": {
-     "description": "Denotes that this stage is deprecated and is no longer used in the diagram.",
-     "type": "boolean"
-    },
-    "ordinal": {
-     "description": "The sort order of the stage. If no sort orders are specified, the stages will be sorted based on their distance from the starting stage, or alphabetically if the diagram is 'all-to-all'.",
-     "type": "integer"
-    },
-    "stage_name": {
-     "description": "The human readable name of the stage.",
-     "type": "string"
-    },
     "state": {
-     "description": "The state this stage belongs to. It must match the ones defined in the diagram 'States' field or defaults will be filled in.",
+     "description": "The state this stage belongs to. It must match the ones defined in the diagram 'states' field or it might be one of the three default options: 'open', 'in_progress' and 'closed'. If not provided, the end user might be asked.",
      "type": "string"
     },
     "transitions_to": {
@@ -136,61 +121,36 @@
     "description": {
      "type": "string"
     },
-    "is_deprecated": {
-     "type": [
-      "boolean",
-      "null"
-     ]
-    },
     "is_filterable": {
      "type": [
       "boolean",
       "null"
      ]
     },
-    "is_groupable": {
-     "type": [
-      "boolean",
-      "null"
-     ]
-    },
     "is_identifier": {
-     "description": "IsIdentifier indicates that the field can be used to uniquely lookup a record. This is meant for fields that are not the primary key of the record type, for example email in an user.",
+     "description": "is_identifier indicates that the field can be used to uniquely lookup a record. This is meant for fields that are not the primary key of the record type, for example email in an user.",
      "type": [
       "boolean",
       "null"
      ]
     },
-    "is_pii": {
-     "description": "PII fields are fields that contain personally identifiable information, and should be treated with special care. (in particular transformed to is_pii fields in devrev)",
+    "is_indexed": {
+     "description": "indexed fields can be used for searching, sorting or filtering.",
+     "type": [
+      "boolean",
+      "null"
+     ]
+    },
+    "is_read_only": {
+     "description": "Read only fields can't be set (when creating or updating a record), but are filled in by some process in the system. eg. created_at, updated_at... External fields that are read only can only be used in forward, and devrev fields only in reverse.",
      "type": [
       "boolean",
       "null"
      ]
     },
     "is_required": {
-     "description": "Required fields are required in the domain model of the external system, that is they always exist on the database level",
+     "description": "Required fields are required in the domain model of the external system.",
      "type": "boolean"
-    },
-    "is_required_on_create": {
-     "description": "IsRequiredOnCreate indicates that the field isn't guaranteed to always exist, but it is required to present when creating new records",
-     "type": [
-      "boolean",
-      "null"
-     ]
-    },
-    "is_sortable": {
-     "type": [
-      "boolean",
-      "null"
-     ]
-    },
-    "is_system": {
-     "description": "System fields can't be set, but are filled in by the system. eg. created_at, updated_at",
-     "type": [
-      "boolean",
-      "null"
-     ]
     },
     "is_write_only": {
      "description": "Fields that are write only should only be written to. External fields that are write only are only mapped in the reverse direction, while devrev fields that are write only are only mapped in the forward direction.",
@@ -251,6 +211,10 @@
         "bool"
        ],
        "type": "string"
+      },
+      "typed_reference": {
+       "type": "object",
+       "not": {}
       }
      },
      "type": "object"
@@ -296,6 +260,10 @@
         "int"
        ],
        "type": "string"
+      },
+      "typed_reference": {
+       "type": "object",
+       "not": {}
       }
      },
      "type": "object"
@@ -341,6 +309,10 @@
         "float"
        ],
        "type": "string"
+      },
+      "typed_reference": {
+       "type": "object",
+       "not": {}
       }
      },
      "type": "object"
@@ -386,6 +358,10 @@
         "text"
        ],
        "type": "string"
+      },
+      "typed_reference": {
+       "type": "object",
+       "not": {}
       }
      },
      "type": "object"
@@ -428,6 +404,10 @@
         "rich_text"
        ],
        "type": "string"
+      },
+      "typed_reference": {
+       "type": "object",
+       "not": {}
       }
      },
      "type": "object"
@@ -475,6 +455,10 @@
         "enum"
        ],
        "type": "string"
+      },
+      "typed_reference": {
+       "type": "object",
+       "not": {}
       }
      },
      "type": "object"
@@ -519,6 +503,58 @@
         "reference"
        ],
        "type": "string"
+      },
+      "typed_reference": {
+       "type": "object",
+       "not": {}
+      }
+     },
+     "type": "object"
+    },
+    {
+     "required": [
+      "type",
+      "typed_reference"
+     ],
+     "additionalProperties": false,
+     "properties": {
+      "enum": {
+       "type": "object",
+       "not": {}
+      },
+      "float": {
+       "type": "object",
+       "not": {}
+      },
+      "int": {
+       "type": "object",
+       "not": {}
+      },
+      "permission": {
+       "type": "object",
+       "not": {}
+      },
+      "reference": {
+       "type": "object",
+       "not": {}
+      },
+      "struct": {
+       "type": "object",
+       "not": {}
+      },
+      "text": {
+       "type": "object",
+       "not": {}
+      },
+      "type": {
+       "enum": [
+        "typed_reference"
+       ],
+       "type": "string"
+      },
+      "typed_reference": {
+       "$ref": "#/definitions/TypedReferenceData",
+       "description": "The specifics of the field if the type is 'typed_reference'"
       }
      },
      "type": "object"
@@ -563,6 +599,10 @@
         "struct"
        ],
        "type": "string"
+      },
+      "typed_reference": {
+       "type": "object",
+       "not": {}
       }
      },
      "type": "object"
@@ -608,6 +648,10 @@
         "date"
        ],
        "type": "string"
+      },
+      "typed_reference": {
+       "type": "object",
+       "not": {}
       }
      },
      "type": "object"
@@ -653,6 +697,10 @@
         "timestamp"
        ],
        "type": "string"
+      },
+      "typed_reference": {
+       "type": "object",
+       "not": {}
       }
      },
      "type": "object"
@@ -694,6 +742,10 @@
         "permission"
        ],
        "type": "string"
+      },
+      "typed_reference": {
+       "type": "object",
+       "not": {}
       }
      },
      "type": "object"
@@ -789,12 +841,17 @@
       "text",
       "rich_text",
       "reference",
+      "typed_reference",
       "enum",
       "date",
       "timestamp",
-      "struct"
+      "struct",
+      "permission"
      ],
      "type": "string"
+    },
+    "typed_reference": {
+     "$ref": "#/definitions/TypedReferenceData"
     }
    },
    "type": "object"
@@ -857,9 +914,6 @@
     "description": {
      "type": "string"
     },
-    "extraction": {
-     "$ref": "#/definitions/ExtractionData"
-    },
     "fields": {
      "description": "The fields of the record type",
      "additionalProperties": {
@@ -867,8 +921,9 @@
      },
      "type": "object"
     },
-    "loading": {
-     "$ref": "#/definitions/LoadingData"
+    "is_loadable": {
+     "description": "Whether the record type can be loaded: that is, whether the connector supports creating it in the system",
+     "type": "boolean"
     },
     "name": {
      "description": "The human readable name of the record type",
@@ -883,7 +938,7 @@
   "RecordTypeCategory": {
    "additionalProperties": false,
    "properties": {
-    "are_transitions_possible": {
+    "are_record_type_conversions_possible": {
      "description": "Indicates whether a record can move between the record types of this category while preserving its identity",
      "type": "boolean"
     },
@@ -900,8 +955,13 @@
    ],
    "additionalProperties": false,
    "properties": {
-    "is_dynamic_typed": {
-     "type": "boolean"
+    "reference_type": {
+     "description": "The parent reference refers to a record that has special ownership over the child",
+     "enum": [
+      "child",
+      "parent"
+     ],
+     "type": "string"
     },
     "refers_to": {
      "description": "The record types that this reference can refer to",
@@ -909,14 +969,6 @@
       "$ref": "#/definitions/ReferenceDetail"
      },
      "type": "object"
-    },
-    "role": {
-     "description": "The parent reference refers to a record that has special ownership over the child",
-     "enum": [
-      "child",
-      "parent"
-     ],
-     "type": "string"
     }
    },
    "type": "object"
@@ -938,17 +990,17 @@
    ],
    "additionalProperties": false,
    "properties": {
+    "all_transitions_allowed": {
+     "description": "Denotes that this diagram has no explicit transitions from one stage to another and should be created as an 'all-to-all' diagram. If this is set to true, it is invalid to use explicitly defined transitions.",
+     "type": "boolean"
+    },
     "controlling_field": {
      "description": "The field that represents the stage in the external system.",
      "minLength": 1,
      "type": "string"
     },
-    "no_transitions_defined": {
-     "description": "Denotes that this diagram has no explicit transitions from one stage to another and should be created as an 'all-to-all' diagram. If this is set to true, any explicitly defined transitions will be ignored.",
-     "type": "boolean"
-    },
     "stages": {
-     "description": "A map of the stages that should be created in DevRev, the key value must be the identifier of the stage.",
+     "description": "A map of the stages that should be created in DevRev, the key value must be the identifier of the stage. The keys must match the enum values in the controlling field, which also define the nice name, order and deprecation of the stages.",
      "minProperties": 2,
      "additionalProperties": {
       "$ref": "#/definitions/CustomStage"
@@ -1012,6 +1064,41 @@
     }
    },
    "type": "object"
+  },
+  "TypedReferenceData": {
+   "required": [
+    "refers_to"
+   ],
+   "additionalProperties": false,
+   "properties": {
+    "is_dynamic_typed": {
+     "type": "boolean"
+    },
+    "reference_type": {
+     "description": "The parent reference refers to a record that has special ownership over the child",
+     "enum": [
+      "child",
+      "parent"
+     ],
+     "type": "string"
+    },
+    "refers_to": {
+     "description": "The record types that this reference can refer to",
+     "additionalProperties": {
+      "$ref": "#/definitions/ReferenceDetail"
+     },
+     "type": "object"
+    },
+    "role": {
+     "description": "The parent reference refers to a record that has special ownership over the child",
+     "enum": [
+      "child",
+      "parent"
+     ],
+     "type": "string"
+    }
+   },
+   "type": "object"
   }
  },
  "properties": {
@@ -1027,6 +1114,13 @@
     "$ref": "#/definitions/RecordType"
    },
    "type": "object"
+  },
+  "schema_version": {
+   "description": "The schema version of the metadata format itself.",
+   "enum": [
+    "v0.2.0"
+   ],
+   "type": "string"
   },
   "struct_types": {
    "additionalProperties": {

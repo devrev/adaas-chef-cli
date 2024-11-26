@@ -138,7 +138,7 @@ Categories of external record types simplify mappings so that a mapping can be a
 Categories also provide a way how custom record types can be mapped.
 
 If the external system allows records to change the record type within the category, while still preserving identity,
-this can be defined by the `are_transitions_possible` field in the `record_type_categories` section. For example, if
+this can be defined by the `are_record_type_conversions_possible` field in the `record_type_categories` section. For example, if
 an issue that can be moved to become a problem in the external system.
 
 ```json
@@ -162,7 +162,7 @@ an issue that can be moved to become a problem in the external system.
   },
   "record_type_categories": {
     "issue": {
-      "are_transitions_possible": true
+      "are_record_type_conversions_possible": true
     }
   }
 }
@@ -283,7 +283,7 @@ If the field is array in the extracted data, it is still typed with the one of t
 
 7. Consider special references:
 
-- Some references have role of parent or child. This means that the child record doesn't make sense without its parent, for example a comment attached to a ticket. Assigning a `role` helps Airdrop correctly handle such fields in case the end-user decides to filter some of the parent records out.
+- Some references have role of parent or child. This means that the child record doesn't make sense without its parent, for example a comment attached to a ticket. Assigning a `reference_type` helps Airdrop correctly handle such fields in case the end-user decides to filter some of the parent records out.
 
 - Sometimes the external system uses references besides the primary key of records, for example when referring to a case by serial number, or to a user by their email. To correctly resolve such references, they must be marked with 'by_field', which must be a field existing in that record type, marked 'is_identifier'. For example:
 
@@ -358,25 +358,21 @@ To declare this in the metadata, ensure the status is represented in the extract
   "stage_diagram": {
     "controlling_field": "status",
     "starting_stage": "detected",
-    "no_transitions_defined": false,
+    "all_transitions_allowed": false,
     "stages": {
-      "detected": {
-        "stage_name": "Detected",
+      "detected": {    
         "transitions_to": ["mitigated", "archived", "rca_ready"],
         "state": "new"
       },
-      "mitigated": {
-        "stage_name": "Mitigated",
+      "mitigated": {     
         "transitions_to": ["archived", "detected"],
         "state": "work_in_progress"
       },
       "rca_ready": {
-        "stage_name": "RCA Ready",
         "transitions_to": ["archived"],
         "state": "work_in_progress"
       },
       "archived": {
-        "stage_name": "Archived",
         "transitions_to": [],
         "state": "completed"
       }
@@ -398,9 +394,11 @@ To declare this in the metadata, ensure the status is represented in the extract
 ```
 
 In the above example, the status field is declared the controlling field of the stage diagram, which then specifies the transitions for each stage.  
-It is possible that the status field has no explicit transitions defined but one would still like to create a stage diagram in DevRev. In that case you should use set the `no_transitions_defined` field to `true`, which will create a diagram where all the defined stages can transition to each other.  
+It is possible that the status field has no explicit transitions defined but one would still like to create a stage diagram in DevRev. In that case you should use set the `all_transitions_allowed` field to `true`, which will create a diagram where all the defined stages can transition to each other.  
 The external system might have a way to categorize statuses (such as status categories in Jira). These can also be included in the diagram metadata (`states` in the example above) which will create them in DevRev and they can be referenced by the stages. This is entirely optional and in case the `states` field is not provided, default DevRev states will be used, those being `open`, `in_progress` and `closed`. If there is a way, the developer can categorize the stages to one of these three, or leave it up to the end user.  
 The `starting_stage` field defines the starting stage of the diagram, in which all new instances of the object will be created. This data should always be provided if available, otherwise the starting stage will be selected alphabetically.
+
+In the current (v0.2.0) metadata format, it is no longer neccessary to assign ordinal and stage_name to stages, the order and the human-readable name will be taken from the enum values defined on the controlling field. 
 
 ## Normalize data
 
