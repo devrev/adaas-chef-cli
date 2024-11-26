@@ -37,15 +37,15 @@ To check the metadata for internal consistency, you should use the following com
 `$ chef-cli validate-metadata < metadata.json`
 This will output any problems there may be with the metadata file.
 
-
 ## Getting a good starting point metadata using the infer-metadata command
 
 `$ chef-cli infer-metadata example_data_directory > metadata.json`
 
 1. Collect example data from the external system, and place them in a directory. Each file should:
-  - Contain the same type of records, named after their type.
-  - Have .json or .jsonl extension, for example `issues.json`
-  - Contain either a single json array of objects, or newline-separated objects.
+
+- Contain the same type of records, named after their type.
+- Have .json or .jsonl extension, for example `issues.json`
+- Contain either a single json array of objects, or newline-separated objects.
 
 2. Run `$ chef-cli infer-metadata example_data_directory`, replacing example_data_directory with the relative path to this directory.
 
@@ -143,6 +143,7 @@ an issue that can be moved to become a problem in the external system.
 
 ```json
 {
+  "schema_version": "v0.2.0",
   "record_types": {
     "issues_stock_epic": {
       "name": "Epic",
@@ -200,6 +201,7 @@ Example:
 
 ```json
 {
+  "schema_version": "v0.2.0",
   "record_types": {
     "issues_stock_epic": {
       "name": "Epic",
@@ -289,6 +291,7 @@ If the field is array in the extracted data, it is still typed with the one of t
 
 ```json
 {
+  "schema_version": "v0.2.0",
   "record_types": {
     "users": {
       "fields": {
@@ -360,11 +363,11 @@ To declare this in the metadata, ensure the status is represented in the extract
     "starting_stage": "detected",
     "all_transitions_allowed": false,
     "stages": {
-      "detected": {    
+      "detected": {
         "transitions_to": ["mitigated", "archived", "rca_ready"],
         "state": "new"
       },
-      "mitigated": {     
+      "mitigated": {
         "transitions_to": ["archived", "detected"],
         "state": "work_in_progress"
       },
@@ -387,7 +390,7 @@ To declare this in the metadata, ensure the status is represented in the extract
       "completed": {
         "name": "Completed",
         "is_end_state": true
-      },
+      }
     }
   }
 }
@@ -398,7 +401,7 @@ It is possible that the status field has no explicit transitions defined but one
 The external system might have a way to categorize statuses (such as status categories in Jira). These can also be included in the diagram metadata (`states` in the example above) which will create them in DevRev and they can be referenced by the stages. This is entirely optional and in case the `states` field is not provided, default DevRev states will be used, those being `open`, `in_progress` and `closed`. If there is a way, the developer can categorize the stages to one of these three, or leave it up to the end user.  
 The `starting_stage` field defines the starting stage of the diagram, in which all new instances of the object will be created. This data should always be provided if available, otherwise the starting stage will be selected alphabetically.
 
-In the current (v0.2.0) metadata format, it is no longer neccessary to assign ordinal and stage_name to stages, the order and the human-readable name will be taken from the enum values defined on the controlling field. 
+In the current (v0.2.0) metadata format, it is no longer neccessary to assign ordinal and stage_name to stages, the order and the human-readable name will be taken from the enum values defined on the controlling field.
 
 ## Normalize data
 
@@ -459,11 +462,13 @@ Obtain a PAT-token from the Settings/Account tab of the devorg where you deploy 
 
 To allow the cli to work in the context of that sync, you have to provide its identifying properties in an environment variable.
 The recommended method is to run:
+
 ```bash
 chef-cli ctx switch --env prod
 ```
 
 This will print the list of airdrop imports in the org. Select the one you like by running
+
 ```bash
 $ eval $(chef-cli ctx switch --env --prod --id <the id you choose>); chef-cli ctx show
 ```
@@ -499,7 +504,7 @@ where the options are:
 The first function of the local UI is to assemble a 'blueprint' for concrete import running in the test-org, allowing the mapping to be tested out and evaluated.
 After it is used for the import, the mappings become immutable, but the chef-cli UI offers a button to make a draft clone, which can be edited again for refinements.
 
-If you are also creating devrev -> external sync, use 
+If you are also creating devrev -> external sync, use
 
 `$ chef-cli configure-mappings --env prod --reverse`, which enabled mapping in both directions.
 
