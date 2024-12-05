@@ -470,7 +470,7 @@ chef-cli ctx switch --env prod
 This will print the list of airdrop imports in the org. Select the one you like by running
 
 ```bash
-$ eval $(chef-cli ctx switch --env --prod --id <the id you choose>); chef-cli ctx show
+eval $(chef-cli ctx switch --env prod --id <the id you choose>); chef-cli ctx show
 ```
 
 If this method doesn't work, you can manually export the variable (replacing the values based on the logs of your running import):
