@@ -441,13 +441,13 @@ All other fields are contained within the `data` attribute.
 Extracted artifacts can be validated with the `chef-cli` using the following command:
 
 ```bash
-$ chef-cli validate-data -m external_domain_metadata.json -r issue < extractor_issues_2.json
+chef-cli validate-data -m external_domain_metadata.json -r issue < extractor_issues_2.json
 ```
 
 You can also generate example data to show the format the data has to be normalized to, using:
 
 ```bash
-$ echo '{}' | chef-cli fuzz-extracted -r issue -m external_domain_metadata.json > example_issues.json
+echo '{}' | chef-cli fuzz-extracted -r issue -m external_domain_metadata.json > example_issues.json
 ```
 
 ## Deploy your snapin in your test org, and run an import.
@@ -482,12 +482,12 @@ export AIRDROP_CONTEXT='{"run_id":"1","mode":"initial","connection_id":"x","migr
 Or you can use the interactive helper of the cli:
 
 ```bash
-$ eval $(chef-cli ctx init); chef-cli ctx show > ctx.json
+eval $(chef-cli ctx init); chef-cli ctx show > ctx.json
 ```
 
 ## Use the local UI to create a recipe blueprint for your initial import:
 
-`$ chef-cli configure-mappings --env prod`
+`chef-cli configure-mappings --env prod`
 
 If your org is no in US-East-1, you have to override an environment variable to make sure the tool reaches to the right server, eg:
 
