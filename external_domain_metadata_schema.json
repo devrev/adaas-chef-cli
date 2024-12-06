@@ -115,11 +115,27 @@
    "type": "object"
   },
   "Field": {
+   "required": [
+    "type"
+   ],
    "additionalProperties": false,
    "properties": {
+    "collection": {
+     "$ref": "#/definitions/CollectionData",
+     "description": "If collection is set, the field is a 'collection' of the given type. eg a list of enum values"
+    },
     "default_value": {},
     "description": {
      "type": "string"
+    },
+    "enum": {
+     "$ref": "#/definitions/EnumData"
+    },
+    "float": {
+     "$ref": "#/definitions/FloatData"
+    },
+    "int": {
+     "$ref": "#/definitions/IntData"
     },
     "is_filterable": {
      "type": [
@@ -161,14 +177,42 @@
     },
     "name": {
      "type": "string"
+    },
+    "permission": {
+     "$ref": "#/definitions/PermissionData"
+    },
+    "reference": {
+     "$ref": "#/definitions/ReferenceData"
+    },
+    "struct": {
+     "$ref": "#/definitions/StructData"
+    },
+    "text": {
+     "$ref": "#/definitions/TextData"
+    },
+    "type": {
+     "description": "The type of the field",
+     "enum": [
+      "bool",
+      "int",
+      "float",
+      "text",
+      "rich_text",
+      "reference",
+      "typed_reference",
+      "enum",
+      "date",
+      "timestamp",
+      "struct",
+      "permission"
+     ],
+     "type": "string"
+    },
+    "typed_reference": {
+     "$ref": "#/definitions/TypedReferenceData"
     }
    },
    "type": "object",
-   "allOf": [
-    {
-     "$ref": "#/definitions/FieldTypeData"
-    }
-   ],
    "oneOf": [
     {
      "required": [
@@ -417,7 +461,6 @@
       "type",
       "enum"
      ],
-     "additionalProperties": false,
      "properties": {
       "default_value": {
        "type": "string"
@@ -468,7 +511,6 @@
       "type",
       "reference"
      ],
-     "additionalProperties": false,
      "properties": {
       "enum": {
        "type": "object",
@@ -516,7 +558,6 @@
       "type",
       "typed_reference"
      ],
-     "additionalProperties": false,
      "properties": {
       "enum": {
        "type": "object",
@@ -564,7 +605,6 @@
       "type",
       "struct"
      ],
-     "additionalProperties": false,
      "properties": {
       "enum": {
        "type": "object",
@@ -802,60 +842,6 @@
    },
    "type": "array"
   },
-  "FieldTypeData": {
-   "required": [
-    "type"
-   ],
-   "properties": {
-    "collection": {
-     "$ref": "#/definitions/CollectionData",
-     "description": "If collection is set, the field is a 'collection' of the given type. eg a list of enum values"
-    },
-    "enum": {
-     "$ref": "#/definitions/EnumData"
-    },
-    "float": {
-     "$ref": "#/definitions/FloatData"
-    },
-    "int": {
-     "$ref": "#/definitions/IntData"
-    },
-    "permission": {
-     "$ref": "#/definitions/PermissionData"
-    },
-    "reference": {
-     "$ref": "#/definitions/ReferenceData"
-    },
-    "struct": {
-     "$ref": "#/definitions/StructData"
-    },
-    "text": {
-     "$ref": "#/definitions/TextData"
-    },
-    "type": {
-     "description": "The type of the field",
-     "enum": [
-      "bool",
-      "int",
-      "float",
-      "text",
-      "rich_text",
-      "reference",
-      "typed_reference",
-      "enum",
-      "date",
-      "timestamp",
-      "struct",
-      "permission"
-     ],
-     "type": "string"
-    },
-    "typed_reference": {
-     "$ref": "#/definitions/TypedReferenceData"
-    }
-   },
-   "type": "object"
-  },
   "FloatData": {
    "additionalProperties": false,
    "properties": {
@@ -1071,9 +1057,6 @@
    ],
    "additionalProperties": false,
    "properties": {
-    "is_dynamic_typed": {
-     "type": "boolean"
-    },
     "reference_type": {
      "description": "The parent reference refers to a record that has special ownership over the child",
      "enum": [
@@ -1088,14 +1071,6 @@
       "$ref": "#/definitions/ReferenceDetail"
      },
      "type": "object"
-    },
-    "role": {
-     "description": "The parent reference refers to a record that has special ownership over the child",
-     "enum": [
-      "child",
-      "parent"
-     ],
-     "type": "string"
     }
    },
    "type": "object"
