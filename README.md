@@ -6,9 +6,9 @@ General ADaaS documentation: https://developer.devrev.ai/snapin-development/adaa
 
 ## Step by step guide
 
-## Install the chef-cli
+## Install chef-cli
 
-A cli tool is provided to assist you in this repo. Select the binary appropriate for your operating system, and install it in your path (or just remember its location). In the following steps we will assume it is available as `$ chef-cli`
+A CLI tool is provided to assist you in this repo. Under [releases](https://github.com/devrev/adaas-chef-cli/releases), select the binary appropriate for your operating system, and install it in your path (or just remember its location). In the following steps we will assume it is available as `$ chef-cli`
 
 To install auto-completions on Linux or Mac, you can run:
 
@@ -179,7 +179,39 @@ The supported types are:
 - `int`
 - `float`
 - `text`
-- `rich_text`: Formatted text with mentions and images.
+  - Text to be interpreted as plain text.
+- `rich_text`
+  - A simple rich text looks like one markdown string wrapped in an array: `["Hello **world**!"]`. 
+    Markdown should be compatible with [CommonMark Spec v0.30](https://spec.commonmark.org/0.30). 
+  - To support mentions `rich_text` can be formatted as an array of strings and mention objects like so:  
+    ```json
+    [
+      "Hello ", 
+      {"ref_type":"external_user_type", "id":"1...", "fallback_record_name": "John Smith"}, 
+      "how are you?"
+    ]
+    ```
+  - Mention represents any mention (user, issue, etc.) in rich text and is defined as:
+      | Field                  | Type   | Required | Description                                                                                                                          |
+      | ---------------------- | ------ | -------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+      | `id`                   | String | Yes      | Identifier of the item being mentioned. This could be a user ID or any other identifier, in the format used by the source system.    |
+      | `ref_type`             | String | Yes      | Type of the item being mentioned. Examples include "issue", "comment", etc. The recipe will convert this according to user mappings. |
+      | `fallback_record_name` | String | No       | The text to display if the mention cannot be resolved. This could be a user's display name or a ticket title, for instance.          |
+  - In reverse loaders should expect the following structure:
+    ```json
+    {
+      "type": "rich_text",
+      "content": [
+        "Hello ",
+        {
+          "ref_type": "external_user_type",
+          "id": "don:...",
+          "fallback_record_name": "John Smith"
+        },
+        "how are you?"
+      ]
+    }
+    ```
 - `reference`: IDs referring to another record. References have to declare what they can refer to,
   which can be one or more record types (`#record:`) or categories (`#category:`).
 - `enum`: A string from a predefined set of values with the optional human-readable names for each value.
@@ -282,6 +314,8 @@ If the field is array in the extracted data, it is still typed with the one of t
   }
 }
 ```
+
+External system fields that shouldn't be mapped in reverse should be marked as `is_read_only`. Depending on their purpose you can also mark fields as `is_indexed`, `is_identifier` etc. You can find the full list of supported field attributes and their descriptions in the [metadata schema](https://github.com/devrev/adaas-chef-cli/blob/main/external_domain_metadata_schema.json#L160). 
 
 7. Consider special references:
 
@@ -550,12 +584,13 @@ You can also find an [example](demo/metadata.json).
 A few points about it:
 
 - The main purpose of the metadata is to define record types. Each record type should correspond to a homogenous set of records in the external system: a domain object that has a well-defined schema.
+
   In some cases this means simply declaring one record type for the api endpoints like '/comments' of the external system, but in other cases, external systems can have configurable custom types or subtypes (for example issuetypes in jira). In these cases the snapin will need to query some API for the list of types, and produce a dynamic list of record_types in the metadata.
 
 - The record_types don't have hierarchy, each is a leaf type, corresponding to concrete records in files marked with that itemtype. Record type categories can be used to group them, this serves two purposes:
 
-1. To be able to define mapping rules that apply to a dynamic set of record types, unknown at the time the snapin is created
-2. To tell the recipe system that a record can transition between two records types while preserving its identity.
+  1. To be able to define mapping rules that apply to a dynamic set of record types, unknown at the time the snapin is created
+  2. To tell the recipe system that a record can transition between two records types while preserving its identity.
 
 - The filed type 'int' is used to represent integer numeric values. In certain external systems identifiers of records or enum values are also stored as intergers. These are however not 'conceptually integers' in airdrops perpective.
   The natural format of integers is `null` | json numbers without decimals.
@@ -614,6 +649,7 @@ A few points about it:
   This should be avoided, and the data normalized to the natural format in the extractor.
 
 - Structs are embedded json objects inside the given field. They are meant to represent data that consists of multiple elements naturally belonging together, for example a phone number or an address, but doesn't form its own record with identity.
+  
   These are specifically helpful in case the whole struct is optional/nullable, but some of its fields are required.
   In this case the structs provide a cleaner representation that flattening it to the object containing it, and then applying some kind of conditional requiredness conditions.
   Example:
