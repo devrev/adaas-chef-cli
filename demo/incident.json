@@ -1,288 +1,309 @@
 {
   "id": "incident-0",
-  "created_date": "1970-02-02T04:06:46+01:00",
-  "modified_date": "1975-03-08T21:15:20+01:00",
+  "operation": "created",
+  "created_date": "1999-12-25T01:15:41+01:00",
+  "modified_date": "1999-12-25T01:00:02+01:00",
   "data": {
-    "actual_close_date": null,
-    "creator": "user-9",
-    "owner": "user-6",
+    "actual_close_date": "1999-12-25T01:00:03+01:00",
+    "creator": "user-2",
+    "owner": "user-8",
     "rca": [
-      "𐐱/|\u0000AB㒆A bᛮ﻿!"
+      "?Ɛ࢐`\"‮󠁟\u000bȺ"
     ],
-    "severity": "severe",
-    "summary": ""
+    "severity": "fatal",
+    "status": "archived",
+    "summary": "ݿᾊA􈷨\u0026𢀅ʰA⸕ᾋM"
   }
 }
 {
   "id": "incident-1",
-  "operation": "created",
-  "created_date": "1970-01-01T01:00:14+01:00",
-  "modified_date": "1970-01-01T01:01:01+01:00",
+  "created_date": "2029-09-28T01:55:44+02:00",
+  "modified_date": "1999-12-25T01:41:25+01:00",
   "data": {
     "actual_close_date": null,
-    "creator": "user-1",
-    "owner": "user-0",
+    "creator": "user-12",
+    "owner": "user-6",
     "rca": [
-      "󻓫̃ aᛮ"
+      "\\~ᾜ۾ ࠴A\u0000≔!#ǈ॥@৻a!A?+"
     ],
     "severity": "severe",
-    "summary": ""
+    "status": "mitigated",
+    "summary": "𒐮₹L¬𠇨؂\taA₪A\\󠀣'\r󠁹୯꙲\\🞗"
   }
 }
 {
   "id": "incident-2",
-  "created_date": "1971-08-23T14:31:18+01:00",
-  "modified_date": "1970-01-01T01:09:35+01:00",
+  "operation": "created",
+  "created_date": "1999-12-25T01:00:04+01:00",
+  "modified_date": "1999-12-25T05:09:50+01:00",
   "data": {
-    "actual_close_date": "1970-01-01T01:38:35+01:00",
-    "creator": "user-7",
-    "owner": "user-5",
+    "actual_close_date": "1999-12-25T01:00:00+01:00",
+    "creator": "user-2",
+    "owner": "user-8",
     "rca": [
-      "\\𑱡"
+      "~Ⱥâᛮ$۶"
     ],
     "severity": "severe",
-    "summary": ""
+    "status": "rca_ready",
+    "summary": "‮⁻₴*℆᷇ः"
   }
 }
 {
   "id": "incident-3",
-  "created_date": "1970-01-01T09:08:04+01:00",
-  "modified_date": "1970-01-01T01:00:30+01:00",
+  "operation": "created",
+  "created_date": "1999-12-25T01:02:19+01:00",
+  "modified_date": "1999-12-25T01:00:02+01:00",
   "data": {
-    "actual_close_date": "1970-01-01T01:00:19+01:00",
-    "creator": "user-2",
-    "owner": "user-10",
+    "actual_close_date": "2024-08-30T10:26:33+02:00",
+    "creator": "user-9",
+    "owner": "user-5",
     "rca": null,
     "severity": "fatal",
-    "summary": "󾐼,"
+    "status": "archived",
+    "summary": "\""
   }
 }
 {
   "id": "incident-4",
   "operation": "created",
-  "created_date": "1970-01-01T01:25:42+01:00",
-  "modified_date": "1970-01-01T01:00:01+01:00",
+  "created_date": "1999-12-25T01:45:07+01:00",
+  "modified_date": "2008-05-14T14:11:34+02:00",
   "data": {
-    "actual_close_date": "1970-01-01T01:08:18+01:00",
-    "creator": "user-11",
-    "owner": "user-5",
+    "actual_close_date": null,
+    "creator": "user-1",
+    "owner": "user-10",
     "rca": null,
-    "severity": "severe",
-    "summary": "\u0015៱˧"
+    "severity": "fatal",
+    "status": "rca_ready",
+    "summary": "\r𝅺A🯊"
   }
 }
 {
   "id": "incident-5",
-  "created_date": "1970-01-01T01:00:15+01:00",
-  "modified_date": "1970-01-01T01:00:03+01:00",
+  "created_date": "2000-01-19T17:39:00+01:00",
+  "modified_date": "1999-12-25T01:08:13+01:00",
   "data": {
-    "actual_close_date": null,
-    "creator": "user-3",
-    "owner": "user-8",
+    "actual_close_date": "1999-12-25T01:00:02+01:00",
+    "creator": "user-0",
+    "owner": "user-0",
     "rca": [
-      "£"
+      "؋ǈ, a"
     ],
     "severity": "minor",
-    "summary": "𑣄ᤪ\r \u0026"
+    "status": "detected",
+    "summary": "a‮󵢉,[\u001d𞲰@ᶩ“A\u0001􉌧੦"
   }
 }
 {
   "id": "incident-6",
-  "operation": "created",
-  "created_date": "1971-08-22T20:52:28+01:00",
-  "modified_date": "1970-01-26T01:21:41+01:00",
+  "created_date": "1999-12-25T01:00:06+01:00",
+  "modified_date": "1999-12-25T01:00:08+01:00",
   "data": {
-    "actual_close_date": null,
-    "creator": "user-5",
-    "owner": "user-8",
+    "actual_close_date": "1999-12-26T22:13:19+01:00",
+    "creator": "user-6",
+    "owner": "user-0",
     "rca": [
-      "☺́"
+      "a\u0000"
     ],
     "severity": "fatal",
-    "summary": "ࡗ|"
+    "status": "archived",
+    "summary": "0"
   }
 }
 {
   "id": "incident-7",
   "operation": "created",
-  "created_date": "1970-01-01T01:35:43+01:00",
-  "modified_date": "1970-01-01T01:00:00+01:00",
+  "created_date": "1999-12-25T01:01:53+01:00",
+  "modified_date": "1999-12-25T03:48:22+01:00",
   "data": {
     "actual_close_date": null,
-    "creator": "user-6",
-    "owner": "user-0",
+    "creator": "user-10",
+    "owner": "user-1",
     "rca": null,
-    "severity": "severe",
+    "severity": "fatal",
+    "status": "rca_ready",
     "summary": ""
   }
 }
 {
   "id": "incident-8",
   "operation": "created",
-  "created_date": "1970-01-01T01:00:43+01:00",
-  "modified_date": "1970-01-01T01:23:09+01:00",
+  "created_date": "1999-12-25T01:00:00+01:00",
+  "modified_date": "1999-12-25T01:00:01+01:00",
   "data": {
-    "actual_close_date": "1970-01-01T01:00:27+01:00",
-    "creator": "user-2",
-    "owner": "user-9",
-    "rca": null,
-    "severity": "minor",
-    "summary": "~۞ǘȾȺa"
+    "actual_close_date": "1999-12-25T01:00:00+01:00",
+    "creator": "user-4",
+    "owner": "user-13",
+    "rca": [
+      ""
+    ],
+    "severity": "fatal",
+    "status": "rca_ready",
+    "summary": "וऻ{@_ᾋ}\u0002{"
   }
 }
 {
   "id": "incident-9",
   "operation": "created",
-  "created_date": "1970-01-01T01:01:53+01:00",
-  "modified_date": "1970-01-01T01:00:04+01:00",
+  "created_date": "1999-12-25T01:00:03+01:00",
+  "modified_date": "1999-12-25T01:00:00+01:00",
   "data": {
-    "actual_close_date": null,
-    "creator": "user-12",
-    "owner": "user-6",
-    "rca": null,
-    "severity": "severe",
-    "summary": "$;4"
+    "actual_close_date": "1999-12-25T01:00:00+01:00",
+    "creator": "user-13",
+    "owner": "user-1",
+    "rca": [
+      ""
+    ],
+    "severity": "minor",
+    "status": "mitigated",
+    "summary": " +³? :"
   }
 }
 {
   "id": "incident-10",
   "operation": "created",
-  "created_date": "1970-01-01T01:00:04+01:00",
-  "modified_date": "1970-01-01T01:00:07+01:00",
+  "created_date": "1999-12-25T01:00:01+01:00",
+  "modified_date": "1999-12-25T01:00:03+01:00",
   "data": {
     "actual_close_date": null,
-    "creator": "user-0",
-    "owner": "user-13",
-    "rca": [
-      "₷󶞧⹌﮻　ʷऻ(𑣩"
-    ],
+    "creator": "user-7",
+    "owner": "user-2",
+    "rca": null,
     "severity": "fatal",
-    "summary": "a~˳@"
+    "status": "archived",
+    "summary": "＄"
   }
 }
 {
   "id": "incident-11",
-  "operation": "created",
-  "created_date": "1970-01-02T22:31:35+01:00",
-  "modified_date": "1970-01-01T01:03:03+01:00",
+  "created_date": "1999-12-25T01:04:02+01:00",
+  "modified_date": "1999-12-25T12:18:32+01:00",
   "data": {
-    "actual_close_date": null,
-    "creator": "user-4",
-    "owner": "user-1",
-    "rca": null,
-    "severity": "fatal",
-    "summary": " {"
+    "actual_close_date": "1999-12-25T01:00:27+01:00",
+    "creator": "user-12",
+    "owner": "user-4",
+    "rca": [
+      " `"
+    ],
+    "severity": "severe",
+    "status": "mitigated",
+    "summary": "쳻d؏̂`ª{ؼऻ,\"𚿽?ಂ'[(﻿"
   }
 }
 {
   "id": "incident-12",
-  "created_date": "1970-01-01T01:01:55+01:00",
-  "modified_date": "2050-05-19T12:36:24+02:00",
+  "created_date": "1999-12-25T04:10:53+01:00",
+  "modified_date": "1999-12-25T01:00:03+01:00",
   "data": {
-    "actual_close_date": null,
-    "creator": "user-5",
-    "owner": "user-2",
+    "actual_close_date": "1999-12-25T01:00:01+01:00",
+    "creator": "user-8",
+    "owner": "user-5",
     "rca": null,
     "severity": "severe",
-    "summary": ""
+    "status": "rca_ready",
+    "summary": "₪\u000ba\u001b+1"
   }
 }
 {
   "id": "incident-13",
-  "created_date": "1970-01-03T00:37:24+01:00",
-  "modified_date": "1970-01-01T01:02:26+01:00",
+  "created_date": "2000-02-06T15:03:13+01:00",
+  "modified_date": "1999-12-25T01:00:38+01:00",
   "data": {
-    "actual_close_date": "1970-01-01T01:06:31+01:00",
-    "creator": "user-3",
-    "owner": "user-11",
+    "actual_close_date": null,
+    "creator": "user-4",
+    "owner": "user-10",
     "rca": null,
-    "severity": "fatal",
-    "summary": "^-=A©"
+    "severity": "severe",
+    "status": "archived",
+    "summary": "₢¯a‮a⅁כa‮ 2Ⅾa*-. ?"
   }
 }
 {
   "id": "incident-14",
-  "created_date": "1970-01-01T02:35:19+01:00",
-  "modified_date": "1970-01-01T01:00:04+01:00",
+  "operation": "created",
+  "created_date": "2000-01-10T06:33:39+01:00",
+  "modified_date": "1999-12-25T01:00:29+01:00",
   "data": {
-    "actual_close_date": "2042-11-13T05:07:36+01:00",
+    "actual_close_date": null,
     "creator": "user-3",
-    "owner": "user-1",
-    "rca": [
-      " .ꪴ` "
-    ],
-    "severity": "fatal",
-    "summary": "@\u003eȺⳮ꙲󠀴〸"
+    "owner": "user-3",
+    "rca": null,
+    "severity": "minor",
+    "status": "mitigated",
+    "summary": "Ⱥ󠁠ד⍀󠁅౾$Ⅱ?\\"
   }
 }
 {
   "id": "incident-15",
   "operation": "created",
-  "created_date": "1970-01-01T01:00:07+01:00",
-  "modified_date": "1970-01-01T01:00:30+01:00",
+  "created_date": "1999-12-25T01:00:00+01:00",
+  "modified_date": "1999-12-25T01:00:01+01:00",
   "data": {
     "actual_close_date": null,
-    "creator": "user-9",
-    "owner": "user-9",
+    "creator": "user-5",
+    "owner": "user-7",
     "rca": null,
     "severity": "severe",
-    "summary": "＝A\u0000\u003c{"
+    "status": "detected",
+    "summary": ""
   }
 }
 {
   "id": "incident-16",
-  "created_date": "1970-11-10T12:12:48+01:00",
-  "modified_date": "1970-01-01T01:04:23+01:00",
+  "operation": "created",
+  "created_date": "2029-12-17T01:00:00+01:00",
+  "modified_date": "1999-12-27T03:40:32+01:00",
   "data": {
     "actual_close_date": null,
-    "creator": "user-10",
-    "owner": "user-5",
+    "creator": "user-11",
+    "owner": "user-11",
     "rca": null,
-    "severity": "fatal",
-    "summary": "⦷?"
+    "severity": "severe",
+    "status": "mitigated",
+    "summary": ";𓐻@~'〣^"
   }
 }
 {
   "id": "incident-17",
-  "created_date": "1970-01-01T01:36:09+01:00",
-  "modified_date": "1970-01-01T01:18:32+01:00",
+  "created_date": "1999-12-25T01:01:54+01:00",
+  "modified_date": "1999-12-25T01:00:00+01:00",
   "data": {
-    "actual_close_date": "1970-01-01T01:04:08+01:00",
-    "creator": "user-8",
+    "actual_close_date": "1999-12-25T01:00:07+01:00",
+    "creator": "user-1",
     "owner": "user-0",
-    "rca": [
-      ""
-    ],
-    "severity": "minor",
-    "summary": "𑆳_~!AA̅'"
+    "rca": null,
+    "severity": "fatal",
+    "status": "rca_ready",
+    "summary": "[𑗍A\u0026$;"
   }
 }
 {
   "id": "incident-18",
-  "operation": "created",
-  "created_date": "1970-01-01T01:52:45+01:00",
-  "modified_date": "1970-01-01T01:00:13+01:00",
+  "created_date": "2003-12-25T11:18:41+01:00",
+  "modified_date": "1999-12-25T01:08:10+01:00",
   "data": {
-    "actual_close_date": "1970-01-01T04:10:00+01:00",
-    "creator": "user-8",
-    "owner": "user-5",
+    "actual_close_date": null,
+    "creator": "user-7",
+    "owner": "user-7",
     "rca": [
-      "Aº- ₶/.₡፹aीᾊ("
+      ""
     ],
     "severity": "fatal",
-    "summary": "Aã"
+    "status": "rca_ready",
+    "summary": "º"
   }
 }
 {
   "id": "incident-19",
-  "created_date": "1970-01-01T01:02:30+01:00",
-  "modified_date": "1970-01-01T02:26:20+01:00",
+  "created_date": "2029-12-17T01:00:00+01:00",
+  "modified_date": "1999-12-25T01:01:43+01:00",
   "data": {
-    "actual_close_date": "1970-01-01T01:00:01+01:00",
-    "creator": "user-3",
-    "owner": "user-1",
+    "actual_close_date": "1999-12-25T01:00:01+01:00",
+    "creator": "user-4",
+    "owner": "user-6",
     "rca": null,
-    "severity": "severe",
-    "summary": " ^`"
+    "severity": "minor",
+    "status": "detected",
+    "summary": "~"
   }
 }
