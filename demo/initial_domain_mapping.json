@@ -165,6 +165,8 @@
             }
         }
     },
+    "_dev_recipe_blueprint_id": "don:integration:dvrv-us-1:devo/842:sync_recipe_blueprint/34",
+    "_dev_recipe_blueprint_object_version": 22,
     "_dev_external_system_type": "ADaaS",
     "_dev_snap_in_slug": "x",
     "_dev_import_slug": "x"

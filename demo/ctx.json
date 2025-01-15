@@ -1,14 +1,14 @@
 {
     "run_id": "1",
     "connection_id": "x",
-    "migration_unit_id": "0919-2",
+    "migration_unit_id": "0712_1",
     "dev_org_id": "DEV-842",
     "dev_user_id": "DEVU-1",
-    "source_id": "09-19-2",
+    "source_id": "07-12-01",
     "source_type": "ADaaS",
     "source_unit_id": "x",
-    "source_unit_name": "08-13",
+    "source_unit_name": "x",
     "import_slug": "x",
-    "snap_in_slug": "permissioned",
+    "snap_in_slug": "x",
     "mode":"initial"
 }

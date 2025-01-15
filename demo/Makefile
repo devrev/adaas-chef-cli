@@ -15,15 +15,11 @@ user.json: metadata-problems
 incident.json: metadata-problems
 	chef-cli fuzz-extracted -r incident -m metadata.json -s 0 < fuzz_config.json > $@
 
-knowledge_page.json: metadata-problems
-	chef-cli fuzz-extracted -r knowledge_page -m metadata.json -s 0 < fuzz_config.json > $@
-
-data-problems: comment.json issue.json user.json metadata.json incident.json knowledge_page.json
+data-problems: comment.json issue.json user.json metadata.json incident.json
 	chef-cli validate-data -m metadata.json -r issue < issue.json
 	chef-cli validate-data -m metadata.json -r comment < comment.json
 	chef-cli validate-data -m metadata.json -r user < user.json
 	chef-cli validate-data -m metadata.json -r incident < incident.json
-	chef-cli validate-data -m metadata.json -r knowledge_page < knowledge_page.json
 	echo "data problems checked" > $@
 
 issues-schema.json: metadata-problems
