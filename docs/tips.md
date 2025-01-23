@@ -10,11 +10,11 @@ A few points about it:
 
 - The main purpose of the metadata is to define record types. Each record type should correspond to a homogenous set of records in the external system: a domain object that has a well-defined schema.
 
-  In some cases this means simply declaring one record type for the api endpoints like '/comments' of the external system, but in other cases, external systems can have configurable custom types or subtypes (for example issuetypes in jira). In these cases the snapin will need to query some API for the list of types, and produce a dynamic list of record_types in the metadata.
+  In some cases this means simply declaring one record type for the api endpoints like '/comments' of the external system, but in other cases, external systems can have configurable custom types or subtypes (for example issuetypes in jira). In these cases the snap-in will need to query some API for the list of types, and produce a dynamic list of record_types in the metadata.
 
 - The record_types don't have hierarchy, each is a leaf type, corresponding to concrete records in files marked with that itemtype. Record type categories can be used to group them, this serves two purposes:
 
-  1. To be able to define mapping rules that apply to a dynamic set of record types, unknown at the time the snapin is created
+  1. To be able to define mapping rules that apply to a dynamic set of record types, unknown at the time the snap-in is created
   2. To tell the recipe system that a record can transition between two records types while preserving its identity.
 
 - The filed type 'int' is used to represent integer numeric values. In certain external systems identifiers of records or enum values are also stored as intergers. These are however not 'conceptually integers' in airdrops perpective.

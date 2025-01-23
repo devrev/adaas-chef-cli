@@ -147,7 +147,7 @@ an issue that can be moved to become a problem in the external system.
 
 Fields' keys must match what is actually found in the extracted data in the artifacts.
 
-The **supported types** are explained in-depth on the following page: [/supported_types.md](/supported_types.md)
+The **supported types** are explained in-depth on the [supported types page](supported_types.md).
 
 If the external system supports custom fields, the set of custom fields in each record type you wish to extract must be
 declared too.
@@ -413,67 +413,23 @@ You can also generate example data to show the format the data has to be normali
 echo '{}' | chef-cli fuzz-extracted -r issue -m external_domain_metadata.json > example_issues.json
 ```
 
-## Deploy your snapin in your test org, and run an import.
+## Deploy your snap-in in your test org, and run an import
 
-This will reach 'waiting for user input' stage. Wait there.
+Relevant documentation can be found in the [DevRev documentation](https://developer.devrev.ai/public/snapin-development/locally-testing-snap-ins) and in [adaas-template repository](https://github.com/devrev/adaas-template). 
 
-## Add your token as an environment variable:
+To deploy the snap-in, run `make auth` and `make deploy` in the snap-in repository. To activate the snap-in, run `devrev snap_in activate`. You can now create an import in the DevRev UI.
 
-Obtain a PAT-token from the Settings/Account tab of the devorg where you deploy your snapin, and export is at DEVREV_TOKEN
+The import will reach 'waiting for user input' stage. Wait there.
 
-## Initialize the context of the sync:
+## Complete the chef-cli initial domain mapping setup
 
-To allow the cli to work in the context of that sync, you have to provide its identifying properties in an environment variable.
-The recommended method is to run:
+Next, continue with the steps outlined in [chef-cli setup](initial_domain_mapping_setup.md). 
 
-```bash
-chef-cli ctx switch --env prod
-```
+When you are done you should have the chef-cli context set up and have the chef-cli local UI running in your browser.
 
-This will print the list of airdrop imports in the org. Select the one you like by running
+## Use the local UI to create initial domain mappings
 
-```bash
-eval $(chef-cli ctx switch --env prod --id <the id you choose>); chef-cli ctx show
-```
-
-If this method doesn't work, you can manually export the variable (replacing the values based on the logs of your running import):
-
-```bash
-export AIRDROP_CONTEXT='{"run_id":"1","mode":"initial","connection_id":"x","migration_unit_id":"0716","dev_org_id":"DEV-1kA79wWrRR","dev_user_id":"DEVU-1","source_id":"07-16","source_type":"ADaaS","source_unit_id":"x","source_unit_name":"x","import_slug":"x","snap_in_slug":"x"}'
-```
-
-Or you can use the interactive helper of the cli:
-
-```bash
-eval $(chef-cli ctx init); chef-cli ctx show > ctx.json
-```
-
-## Use the local UI to create a recipe blueprint for your initial import:
-
-`chef-cli configure-mappings --env prod`
-
-If your org is no in US-East-1, you have to override an environment variable to make sure the tool reaches to the right server, eg:
-
-```bash
-ACTIVE_PARTITION=dvrv-in-1 chef-cli configure-mappings --env prod
-```
-
-where the options are:
-"dvrv-us-1"
-"dvrv-eu-1"
-"dvrv-in-1"
-"dvrv-de-1"
-
-The first function of the local UI is to assemble a 'blueprint' for concrete import running in the test-org, allowing the mapping to be tested out and evaluated.
-After it is used for the import, the mappings become immutable, but the chef-cli UI offers a button to make a draft clone, which can be edited again for refinements.
-
-If you are also creating DevRev -> external sync, use
-
-`$ chef-cli configure-mappings --env prod --reverse`, which enabled mapping in both directions.
-
-## Use the local UI to create an initial domain mappings
-
-The final artifact of the recipe creation process is the initial_domain_mappings.json, which has to embedded in the extractor.
+The final artifact of the recipe creation process is the `initial_domain_mapping.json`, which has to be embedded in the extractor.
 
 This mapping, unlike the recipe blueprint of a concrete import, can contain multiple options for each external record type from which the end-user might choose (for example allow 'task' from an external system to map either to issue or ticket in DevRev), and it can contain also mappings that apply to a record type category. When the user runs a new import, and the extractor reports in its metadata record types belonging to this category, that are not directly mapped in the initial domain mappings, the recipe manager will apply the per-category default to them.
 
@@ -481,7 +437,7 @@ After the blueprint of the test import was completed, the 'install in this org' 
 
 By repeating this process (run a new import, create a different configuration, merge to the initial mappings), you can create an initial mapping that contains multiple options for the user to choose from.
 
-Finally the Export button allows you to retrieve the initial_domain_mapping.json.
+Finally the Export button allows you to retrieve the `initial_domain_mapping.json`.
 
 ## Tip: use local metadata in the local UI
 
@@ -495,7 +451,7 @@ In this case it is not validated that the local file is the same as the one subm
 
 ## Test an import with initial mapping using the in-app UI.
 
-Once the initial mappings are prepared and, any new import in the org (with the same snapin slug and import slug) where they are installed will use them. The end-users can influence the recipe blueprint that gets created for the sync unit trough the mapping screen in the UI, where they can make record-type filtering, mapping, fine grained filtering, low-code field and value mapping, and finally custom field filtering.
+Once the initial mappings are prepared and, any new import in the org (with the same snap-in slug and import slug) where they are installed will use them. The end-users can influence the recipe blueprint that gets created for the sync unit trough the mapping screen in the UI, where they can make record-type filtering, mapping, fine grained filtering, low-code field and value mapping, and finally custom field filtering.
 
 Their decisions are constrained by the choices provided in the initial domain mappings. Currently the low-code UI offers limited insight into the mappings and their reasons, and in some cases, mismatches arise when something that worked in chef-cli doesn't offer the right options to the user, or not all fields that should be resolved are solved. To assist debugging such cases, chef-cli provides a command to extract the description of the low-code decisions that are asked in the UI. Please provide this to us when reporting an issue with how the end-user mapping UI behaves.
 
