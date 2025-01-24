@@ -441,7 +441,7 @@ Finally the Export button allows you to retrieve the `initial_domain_mapping.jso
 
 ## Tip: use local metadata in the local UI
 
-You can also provide a local metadata file to the command using the '-m' flag for example: `chef-cli configure-mappings --end dev -m metadata.json`, this enables to use:
+You can also provide a local metadata file to the command using the '-m' flag for example: `chef-cli configure-mappings --env prod -m metadata.json`, this enables to use:
 
 - raw jq transformations using an external field as input. (This is an experimental feature)
 
