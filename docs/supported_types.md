@@ -46,7 +46,7 @@ DevRev supports the following types:
       ]
     }
     ```
-  - Articles don't use markdown, but a custom format, refer to DevRev documentation for more details.
+  - Articles support Markdown as well as HTML. For more details, refer to [article references](article_references.md).
 
 - `reference`: IDs referring to another record. References have to declare what they can refer to,
   which can be one or more record types (`#record:`) or categories (`#category:`).
