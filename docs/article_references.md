@@ -1,6 +1,5 @@
 # Handling Article References
 
-
 ## Prerequisites
 Before tackling article references, you need to understand the [rich_text](./supported_types.md#rich_text) type.
 
@@ -35,7 +34,7 @@ The content in DevRev should look like this:
 <p><img src="don:core:dvrv-us-1:devo/0:artifact/1" alt="download.jpeg"></p>
 ```
 
-`don:core:dvrv-us-1:devo/0:artifact/1` is the ID of the artifact created in DevRev.
+`don:core:dvrv-us-1:devo/0:artifact/1` is the ID of the artifact created in DevRev corresponding to the attachment with ID `29908544740244` in the external source system.
 To achieve this, you need to transform the content of the article to this:
 ```json
 {
@@ -54,7 +53,7 @@ To achieve this, you need to transform the content of the article to this:
 The platform simply replaces the reference block with the ID of the artifact. The resolved value in not wrapped in double quotes. 
 
 ### Links to other articles
-If an article links to another article, you need to create a reference to the article in the content of the article. This is important because at the extractor stage, it is impossible to predict the ID of the article that will be created in DevRev. This feature is only available for HTML format. However, since Markdown can contain HTML, you can use the same approach for Markdown as well.
+If there is a link to another article in the content of the article, you need to create a reference to the article. The link must be to an article that was either created in previous syncs or will be created in the current sync. At the extractor stage, it is impossible to predict the ID of the article that will be created in DevRev. So, this must be handled by the platform. This feature is only available for HTML format. However, since Markdown can contain HTML, you can use the same approach for Markdown as well.
 
 #### HTML
 ```
@@ -72,7 +71,7 @@ The content in DevRev should look like this:
 <p>You can create an account and log-in <a data-article-id="don:core:dvrv-us-1:devo/0:article/10" href="/ART-10" target="_self">only</a> with the company email.
 ```
 
-`don:core:dvrv-us-1:devo/0:article/10` is the ID of the article created in DevRev.
+`don:core:dvrv-us-1:devo/0:article/10` is the ID of the article created in DevRev corresponding to the article with ID `360059607772` in the external source system.
 To achieve this, you need to transform the content of the article to this:
 ```json
 {
@@ -88,5 +87,4 @@ To achieve this, you need to transform the content of the article to this:
     ]
 }
 ```
-
 The platform replaces the reference block with the ID of the article as well as adds the href attribute with the appropriate value.
