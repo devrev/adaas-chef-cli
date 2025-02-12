@@ -81,4 +81,4 @@ To achieve this, you need to transform the content of the article to this:
     "\" target=\"_self\"> only</a> with the company email."
 ]
 ```
-The ref_type should be set to article and the ID should be the ID of the article in the external source system. The platform replaces the reference block with the ID of the article as well as adds the href attribute with the appropriate value.
+The ref_type should be set to the item type in the external system that is being mapped to articles. For example, if you're importing documents from the external system as articles, the `ref_type` should be set to documents. The ID should be the ID of the item in the external source system. The platform replaces the reference block with the ID of the corresponding article in DevRev as well as adds the href attribute with the appropriate value.
