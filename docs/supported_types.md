@@ -17,8 +17,7 @@ DevRev supports the following types:
   - Rich text is used in DevRev to represent text fields that can be formatted and can contain mentions. Eg.: description of an issue, body of a conversation, etc.
   - A simple rich text looks like one markdown string wrapped in an array: `["Hello **world**!"]`.
     Markdown should be compatible with [CommonMark Spec v0.30](https://spec.commonmark.org/0.30).
-  - To support mentions `rich_text` can be formatted as an array of strings and mention objects. The field should also use the *use rich text* transformation method.
-  - Example of a simple mention object:  
+  - To support mentions `rich_text` can be formatted as an array of strings and mention objects like so:  
     ```json
     [
       "Hello ", 
@@ -47,7 +46,7 @@ DevRev supports the following types:
       ]
     }
     ```
-  - Articles support Markdown as well as HTML. For more details, refer to [article references](article_references.md).
+  - Articles support Markdown as well as HTML. For more details, refer to [article mentions](./importing_articles.md).
 
 - `reference`: IDs referring to another record. References have to declare what they can refer to,
   which can be one or more record types (`#record:`) or categories (`#category:`).
