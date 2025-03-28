@@ -1,27 +1,29 @@
-# Handling Article References
+# Handling Article Imports
 
-## Prerequisites
-Before tackling article references, you need to understand the [rich_text](./supported_types.md#rich_text) type.
+## Article mentions
 
-## What kind of references are supported?
-We support references to artifacts and articles. An inline attachment must be mapped to an artifact. A link to another article must be mapped to an article.
+### Prerequisites
+Before tackling article mentions, you need to understand the [rich_text](./supported_types.md#rich_text) type.
 
-## How to handle references?
+### What kind of mentions are supported?
+We support mentions to artifacts and articles. An inline attachment must be mapped to an artifact. A link to another article must be mapped to an article.
 
-### Inline attachments
+### How to handle mentions?
+
+#### Inline attachments
 If an inline attachment is hosted in the source system, it must be created as an artifact in DevRev. The same link cannot be used as the attachment will be deleted in the source system when our customers deactivate the account. However, creating an artifact is not enough. The artifact must linked in the appropriate place in the article content. 
 
-#### HTML
+##### HTML
 ```
 <img src="don:core:dvrv-us-1:devo/0:artifact/1" alt="Alt Text"/>
 ```
 
-#### Markdown
+##### Markdown
 ```
 ![Alt Text](don:core:dvrv-us-1:devo/0:artifact/1)
 ```
 
-#### Example
+##### Example
 Let's say the content of your external system looks like this:
 ```
 <p>This is an article with one image.</p>
@@ -47,17 +49,17 @@ To achieve this, you need to transform the content of the article to this:
     "\" alt=\"download.jpeg\"></p>" 
 ]
 ```
-The ref_type should be set to artifact and the ID should be the ID of the attachment in the external source system. The platform simply replaces the reference block with the ID of the corresponding artifact. The resolved value in not wrapped in double quotes. 
+The ref_type should be set to artifact and the ID should be the ID of the attachment in the external source system. The platform simply replaces the mention block with the ID of the corresponding artifact. The resolved value is not wrapped in double quotes.
 
-### Links to other articles
-If there is a link to another article in the content of the article, you need to create a reference to the article. The link must be to an article that was either created in previous syncs or will be created in the current sync. At the extractor stage, it is impossible to predict the ID of the article that will be created in DevRev. So, this must be handled by the platform. This feature is only available for HTML format. However, since Markdown can contain HTML, you can use the same approach for Markdown as well.
+#### Links to other articles
+If there is a link to another article in the content of the article, you need to create a mention to the article. The link must be to an article that was either created in previous syncs or will be created in the current sync. At the extractor stage, it is impossible to predict the ID of the article that will be created in DevRev. So, this must be handled by the platform. This feature is only available for HTML format. However, since Markdown can contain HTML, you can use the same approach for Markdown as well.
 
-#### HTML
+##### HTML
 ```
 <a data-article-id="don:core:dvrv-us-1:devo/0:article/10" href="/ART-10" target="_self">Contact our Support Team</a>
 ```
 
-#### Example
+##### Example
 Let's say the content of your external system looks like this:
 ```
 <p>You can create an account and log-in <a href="https://devrev.zendesk.com/hc/en-us/articles/360059607772" target="_self">only</a> with the company email.
@@ -81,4 +83,8 @@ To achieve this, you need to transform the content of the article to this:
     "\" target=\"_self\"> only</a> with the company email."
 ]
 ```
-The ref_type should be set to the item type in the external system that is being mapped to articles. For example, if you're importing documents from the external system as articles, the `ref_type` should be set to documents. The ID should be the ID of the item in the external source system. The platform replaces the reference block with the ID of the corresponding article in DevRev as well as adds the href attribute with the appropriate value.
+The ref_type should be set to the item type in the external system that is being mapped to articles. For example, if you're importing documents from the external system as articles, the `ref_type` should be set to documents. The ID should be the ID of the item in the external source system. The platform replaces the mention block with the ID of the corresponding article in DevRev as well as adds the href attribute with the appropriate value.
+
+## Managing Permissions
+
+You can manage permissions in the `shared_with` field. Permissions can reference users, groups and [platform groups](./platform_groups.md).
