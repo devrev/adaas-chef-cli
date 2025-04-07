@@ -1,0 +1,505 @@
+$defs:
+    airdrop-recipe-blueprint-shards-create-request:
+        description: Create a fresh recipe blueprint shard.
+        properties:
+            devrev_leaf_type:
+                $ref: '#/$defs/airdrop-recipe-dev-rev-leaf-type'
+            stock_field_mappings:
+                additionalProperties:
+                    $ref: '#/$defs/airdrop-recipe-set-field-mapping'
+                description: |
+                    Mapping for DevRev stock fields, keyed by IDs of said stock fields.
+                type: object
+        required:
+            - devrev_leaf_type
+        title: airdrop-recipe-blueprint-shards-create-request
+        type: object
+    airdrop-recipe-create-possible-custom-object-mapping:
+        properties:
+            forward:
+                description: |
+                    Whether the mapping can be used in the sync_to_devrev direction.
+                type: boolean
+            reverse:
+                description: |
+                    Whether the mapping can be used in the sync_from_devrev direction.
+                type: boolean
+            shard:
+                $ref: '#/$defs/airdrop-recipe-create-possible-custom-object-mapping-shard'
+        required:
+            - forward
+            - reverse
+        title: airdrop-recipe-create-possible-custom-object-mapping
+        type: object
+    airdrop-recipe-create-possible-custom-object-mapping-shard:
+        properties:
+            create_shard:
+                $ref: '#/$defs/airdrop-recipe-blueprint-shards-create-request'
+            mode:
+                enum:
+                    - create_shard
+                    - set_existing_shard
+                type: string
+            set_existing_shard:
+                $ref: '#/$defs/airdrop-recipe-set-existing-shard'
+        title: airdrop-recipe-create-possible-custom-object-mapping-shard
+        type: object
+    airdrop-recipe-create-possible-record-type-mapping:
+        properties:
+            devrev_leaf_type:
+                format: text
+                type: string
+            forward:
+                description: |
+                    Whether the mapping can be used in the sync_to_devrev direction.
+                type: boolean
+            reverse:
+                description: |
+                    Whether the mapping can be used in the sync_from_devrev direction.
+                type: boolean
+            shard:
+                $ref: '#/$defs/airdrop-recipe-create-possible-record-type-mapping-shard'
+        required:
+            - devrev_leaf_type
+            - forward
+            - reverse
+        title: airdrop-recipe-create-possible-record-type-mapping
+        type: object
+    airdrop-recipe-create-possible-record-type-mapping-shard:
+        discriminator:
+            mapping:
+                create_shard: '#/$defs/airdrop-recipe-blueprint-shards-create-request'
+            propertyName: mode
+        oneOf:
+            - $ref: '#/$defs/airdrop-recipe-blueprint-shards-create-request'
+        properties:
+            mode:
+                $ref: '#/$defs/airdrop-recipe-create-possible-record-type-mapping-shard-mode'
+        required:
+            - mode
+        title: airdrop-recipe-create-possible-record-type-mapping-shard
+        type: object
+    airdrop-recipe-create-possible-record-type-mapping-shard-mode:
+        description: |
+            You can either create a fresh shard to use for this mapping, assign an
+            existing one.
+        enum:
+            - create_shard
+            - set_existing_shard
+        type: string
+    airdrop-recipe-create-possible-record-type-mappings:
+        properties:
+            default_mapping:
+                $ref: '#/$defs/airdrop-recipe-dev-rev-leaf-type'
+            mapping_as_custom_object:
+                $ref: '#/$defs/airdrop-recipe-create-possible-custom-object-mapping'
+            possible_record_type_mappings:
+                description: |
+                    Stock devrev types to which the external type might be mapped.
+                items:
+                    $ref: '#/$defs/airdrop-recipe-create-possible-record-type-mapping'
+                type: array
+        required:
+            - default_mapping
+        title: airdrop-recipe-create-possible-record-type-mappings
+        type: object
+    airdrop-recipe-custom-stage:
+        properties:
+            is_deprecated:
+                type: boolean
+            ordinal:
+                format: int32
+                type: integer
+            stage_name:
+                format: text
+                type: string
+            transition_to:
+                items:
+                    format: text
+                    type: string
+                type: array
+        required:
+            - is_deprecated
+            - ordinal
+            - stage_name
+            - transition_to
+        title: airdrop-recipe-custom-stage
+        type: object
+    airdrop-recipe-dev-rev-leaf-type:
+        properties:
+            object_category:
+                $ref: '#/$defs/airdrop-recipe-dev-rev-leaf-type-dev-rev-leaf-type-category'
+            object_type:
+                description: |
+                    The object type in DevRev. DON ID for stock leaf types and the
+                    final DON component for custom object DONs.
+                format: text
+                type: string
+        required:
+            - object_type
+        title: airdrop-recipe-dev-rev-leaf-type
+        type: object
+    airdrop-recipe-dev-rev-leaf-type-dev-rev-leaf-type-category:
+        enum:
+            - custom
+            - fresh_custom
+            - stock
+            - synthetic
+        type: string
+    airdrop-recipe-filter-typed-reference:
+        properties:
+            allowed_types:
+                description: |
+                    A list of all DevRev leaf types for which the external value will
+                    be used directly, the rest will be filtered out.
+                items:
+                    $ref: '#/$defs/airdrop-recipe-dev-rev-leaf-type'
+                type: array
+            is_collection:
+                description: Whether the field is a collection.
+                type: boolean
+        required:
+            - allowed_types
+        title: airdrop-recipe-filter-typed-reference
+        type: object
+    airdrop-recipe-fixed-bool:
+        description: Use a fixed boolean value.
+        properties:
+            bool:
+                type: boolean
+        required:
+            - bool
+        title: airdrop-recipe-fixed-bool
+        type: object
+    airdrop-recipe-fixed-string:
+        description: Use a fixed string value.
+        properties:
+            enum:
+                format: text
+                type: string
+        required:
+            - enum
+        title: airdrop-recipe-fixed-string
+        type: object
+    airdrop-recipe-make-authorization-target:
+        additionalProperties: false
+        title: airdrop-recipe-make-authorization-target
+        type: object
+    airdrop-recipe-make-custom-links:
+        properties:
+            reverse_stock_types:
+                additionalProperties:
+                    format: text
+                    type: string
+                description: |
+                    Mapping between DevRev link types and external link types.
+                type: object
+        required:
+            - link_type_names
+            - reverse_stock_types
+            - source_types
+            - target_types
+        title: airdrop-recipe-make-custom-links
+        type: object
+    airdrop-recipe-make-custom-stages:
+        description: Construct a stage diagram out of this field.
+        properties:
+            stages:
+                additionalProperties:
+                    $ref: '#/$defs/airdrop-recipe-custom-stage'
+                description: Data about the stages used in the diagram.
+                type: object
+        required:
+            - stages
+        title: airdrop-recipe-make-custom-stages
+        type: object
+    airdrop-recipe-map-enum:
+        description: |
+            Construct a DevRev field by mapping each enum value from the external
+            system to a DevRev enum value.
+        properties:
+            forward:
+                additionalProperties:
+                    $ref: '#/$defs/airdrop-recipe-mapping-target-value'
+                description: |
+                    Mapping of external enum values (indexed by their key) to DevRev
+                    enum values.
+                type: object
+            forward_default:
+                description: |
+                    The key of an external value with which to replace any that is not
+                    found in the values map.
+                format: text
+                type: string
+            is_array:
+                description: |
+                    Whether the field is an array of enums both externally and in
+                    DevRev.
+                type: boolean
+            reverse:
+                additionalProperties:
+                    $ref: '#/$defs/airdrop-recipe-mapping-target-value'
+                description: |
+                    Mapping of DevRev enum values (indexed by their key) to external
+                    enum values.
+                type: object
+        title: airdrop-recipe-map-enum
+        type: object
+    airdrop-recipe-map-roles:
+        description: |
+            Construct a DevRev field by mapping each enum value from the external
+            system to a DevRev enum value.
+        properties:
+            forward:
+                additionalProperties:
+                    format: text
+                    type: string
+                description: |
+                    Mapping of external roles to DevRev roles for the forward
+                    transformation.
+                type: object
+            forward_default:
+                description: |
+                    The key of an external value with which to replace any that is not
+                    found in the values map.
+                format: text
+                type: string
+            is_array:
+                description: Whether the field is an array of roles.
+                type: boolean
+        title: airdrop-recipe-map-roles
+        type: object
+    airdrop-recipe-mapping-target-value:
+        properties:
+            value:
+                format: text
+                type: string
+        required:
+            - value
+        title: airdrop-recipe-mapping-target-value
+        type: object
+    airdrop-recipe-set-field-mapping:
+        description: |
+            Details of the mapping of a DevRev field. It is always constructed
+            using a transformation method, which can either use a
+            primary_external_field, multiple secondary_external_fields, both or
+            neither.
+        properties:
+            forward:
+                description: |
+                    True if this mapping is used in initial and sync_to_devrev runs.
+                type: boolean
+            primary_external_field:
+                description: |
+                    The primary external field from which this field is mapped, if any.
+                format: text
+                type: string
+            reverse:
+                description: |
+                    True if this mapping is used in sync_from_devrev runs. Either
+                    forward or reverse, or both have to be selected.
+                type: boolean
+            transformation_method_for_set:
+                $ref: '#/$defs/airdrop-recipe-set-field-mapping-transformation-method'
+        required:
+            - forward
+            - reverse
+        title: airdrop-recipe-set-field-mapping
+        type: object
+    airdrop-recipe-set-field-mapping-transformation-method:
+        discriminator:
+            mapping:
+                filter_typed_reference: '#/$defs/airdrop-recipe-filter-typed-reference'
+                make_authorization_target: '#/$defs/airdrop-recipe-make-authorization-target'
+                make_custom_links: '#/$defs/airdrop-recipe-make-custom-links'
+                make_custom_stages: '#/$defs/airdrop-recipe-make-custom-stages'
+                make_struct: '#/$defs/airdrop-recipe-set-make-struct'
+                map_enum: '#/$defs/airdrop-recipe-map-enum'
+                map_roles: '#/$defs/airdrop-recipe-map-roles'
+                use_as_array_value: '#/$defs/airdrop-recipe-use-as-array-value'
+                use_devrev_record: '#/$defs/airdrop-recipe-use-dev-rev-record'
+                use_directly: '#/$defs/airdrop-recipe-use-directly'
+                use_first_non_null: '#/$defs/airdrop-recipe-set-use-first-non-null'
+                use_fixed_value: '#/$defs/airdrop-recipe-use-fixed-value'
+                use_rich_text: '#/$defs/airdrop-recipe-use-rich-text'
+            propertyName: transformation_method
+        oneOf:
+            - $ref: '#/$defs/airdrop-recipe-filter-typed-reference'
+            - $ref: '#/$defs/airdrop-recipe-make-authorization-target'
+            - $ref: '#/$defs/airdrop-recipe-make-custom-links'
+            - $ref: '#/$defs/airdrop-recipe-make-custom-stages'
+            - $ref: '#/$defs/airdrop-recipe-map-enum'
+            - $ref: '#/$defs/airdrop-recipe-map-roles'
+            - $ref: '#/$defs/airdrop-recipe-set-make-struct'
+            - $ref: '#/$defs/airdrop-recipe-set-use-first-non-null'
+            - $ref: '#/$defs/airdrop-recipe-use-as-array-value'
+            - $ref: '#/$defs/airdrop-recipe-use-dev-rev-record'
+            - $ref: '#/$defs/airdrop-recipe-use-directly'
+            - $ref: '#/$defs/airdrop-recipe-use-fixed-value'
+            - $ref: '#/$defs/airdrop-recipe-use-rich-text'
+        properties:
+            transformation_method:
+                $ref: '#/$defs/airdrop-recipe-set-field-mapping-transformation-method-transformation-method'
+        required:
+            - transformation_method
+        title: airdrop-recipe-set-field-mapping-transformation-method
+        type: object
+    airdrop-recipe-set-field-mapping-transformation-method-transformation-method:
+        description: |
+            The transformation method used to transform the value for this field.
+        enum:
+            - filter_typed_reference
+            - make_authorization_target
+            - make_custom_links
+            - make_custom_stages
+            - make_struct
+            - map_enum
+            - map_roles
+            - use_as_array_value
+            - use_devrev_record
+            - use_directly
+            - use_first_non_null
+            - use_fixed_value
+            - use_raw_jq
+            - use_rich_text
+        type: string
+    airdrop-recipe-set-make-struct:
+        properties:
+            field_mappings:
+                additionalProperties:
+                    $ref: '#/$defs/airdrop-recipe-set-field-mapping'
+                description: |
+                    A map of the fields inside a struct to their selected mapping
+                    option.
+                type: object
+        required:
+            - field_mappings
+        title: airdrop-recipe-set-make-struct
+        type: object
+    airdrop-recipe-set-use-first-non-null:
+        properties:
+            alternatives:
+                description: |
+                    A list of field mappings where the first one that doesn't produce
+                    null will be used.
+                items:
+                    $ref: '#/$defs/airdrop-recipe-set-use-first-non-null-alternative'
+                type: array
+        required:
+            - alternatives
+        title: airdrop-recipe-set-use-first-non-null
+        type: object
+    airdrop-recipe-set-use-first-non-null-alternative:
+        properties:
+            field_mapping:
+                $ref: '#/$defs/airdrop-recipe-set-field-mapping'
+            is_default_in_reverse:
+                description: |
+                    Whether this field mapping should be used as the default in
+                    reverse.
+                type: boolean
+        required:
+            - field_mapping
+            - is_default_in_reverse
+        title: airdrop-recipe-set-use-first-non-null-alternative
+        type: object
+    airdrop-recipe-use-as-array-value:
+        additionalProperties: false
+        description: |
+            Use the external value wrapped in an array as the single element.
+        title: airdrop-recipe-use-as-array-value
+        type: object
+    airdrop-recipe-use-dev-rev-record:
+        description: Use a fixed reference to an existing record in DevRev.
+        properties:
+            id:
+                description: |
+                    The ID of the existing DevRev record to fill in the field.
+                format: id
+                type: string
+            is_array:
+                description: Whether the field is an array of references.
+                type: boolean
+            leaf_type:
+                $ref: '#/$defs/airdrop-recipe-dev-rev-leaf-type'
+        title: airdrop-recipe-use-dev-rev-record
+        type: object
+    airdrop-recipe-use-directly:
+        additionalProperties: false
+        description: Use the external value directly without any change.
+        title: airdrop-recipe-use-directly
+        type: object
+    airdrop-recipe-use-fixed-value:
+        description: |
+            User can choose between a fixed boolean and a fixed enum value.
+        discriminator:
+            mapping:
+                bool: '#/$defs/airdrop-recipe-fixed-bool'
+                enum_value: '#/$defs/airdrop-recipe-fixed-string'
+                none: '#/$defs/empty'
+            propertyName: value
+        oneOf:
+            - $ref: '#/$defs/airdrop-recipe-fixed-bool'
+            - $ref: '#/$defs/airdrop-recipe-fixed-string'
+            - $ref: '#/$defs/empty'
+        properties:
+            value:
+                $ref: '#/$defs/airdrop-recipe-use-fixed-value-value'
+        title: airdrop-recipe-use-fixed-value
+        type: object
+    airdrop-recipe-use-fixed-value-value:
+        description: Pick between a fixed boolean and a fixed devrev enum.
+        enum:
+            - bool
+            - enum_value
+            - none
+        type: string
+    airdrop-recipe-use-rich-text:
+        additionalProperties: false
+        description: Make a rich text field.
+        title: airdrop-recipe-use-rich-text
+        type: object
+    empty:
+        additionalProperties: false
+        title: empty
+        type: object
+$schema: https://json-schema.org/draft/2020-12/schema
+properties:
+    external_system_id:
+        description: |
+            The unique ID of the external system to which these mappings apply.
+        format: text
+        type: string
+    external_system_type:
+        description: Type of the SoR to which these initial mappings apply.
+        format: text
+        type: string
+    import_slug:
+        description: |
+            Snap-in slug to which the mappings apply, only populated for ADaaS
+            external system type.
+        format: text
+        type: string
+    record_type_category_mappings:
+        additionalProperties:
+            $ref: '#/$defs/airdrop-recipe-create-possible-record-type-mappings'
+        description: |
+            Possible mappings of record type categories to devrev object types.
+        type: object
+    record_type_mappings:
+        additionalProperties:
+            $ref: '#/$defs/airdrop-recipe-create-possible-record-type-mappings'
+        description: |
+            Possible mappings of external record types to devrev object types.
+        type: object
+    snap_in_slug:
+        description: |
+            Snap-in slug to which the mappings apply, only populated for ADaaS
+            external system type.
+        format: text
+        type: string
+required:
+    - external_system_type
+title: airdrop-recipe-initial-domain-mappings-install-request
+type: object
+

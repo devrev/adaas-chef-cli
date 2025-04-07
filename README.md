@@ -34,3 +34,4 @@ To install PowerShell auto-completions, first run `Set-ExecutionPolicy -Scope Pr
 - [Supported Types](docs/supported_types.md)
 - [Tips](docs/tips.md)
 - [Reasons why some mappings might be unavailable](docs/mapping_reasons.md)
+- [Using chef-cli as an MCP Server](docs/mcp.md)

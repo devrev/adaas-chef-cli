@@ -219,6 +219,14 @@
                 "content": {
                     "type": "rich_text"
                 },
+                "title": {
+                    "is_required": true,
+                    "type": "text",
+                    "text": {
+                        "min_length": 4,
+                        "max_length": 99
+                    }
+                },
                 "owner": {
                     "is_required": true,
                     "type": "reference",

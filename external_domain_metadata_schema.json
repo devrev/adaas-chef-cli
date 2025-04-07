@@ -19,6 +19,49 @@
    },
    "type": "object"
   },
+  "CustomLinkData": {
+   "required": [
+    "link_type_field",
+    "link_direction_names"
+   ],
+   "additionalProperties": false,
+   "properties": {
+    "link_direction_names": {
+     "minLength": 1,
+     "additionalProperties": {
+      "$ref": "#/definitions/CustomLinkNames"
+     },
+     "type": [
+      "object",
+      "null"
+     ]
+    },
+    "link_type_field": {
+     "description": "The field that defines the link types in the system.",
+     "minLength": 1,
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "CustomLinkNames": {
+   "required": [
+    "forward_name",
+    "backward_name"
+   ],
+   "additionalProperties": false,
+   "properties": {
+    "backward_name": {
+     "description": "The backward name of the link",
+     "type": "string"
+    },
+    "forward_name": {
+     "description": "The forward name of the link",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
   "CustomStage": {
    "additionalProperties": false,
    "properties": {
@@ -911,6 +954,9 @@
      "description": "Whether the record type can be loaded: that is, whether the connector supports creating it in the system",
      "type": "boolean"
     },
+    "link_naming_data": {
+     "$ref": "#/definitions/CustomLinkData"
+    },
     "name": {
      "description": "The human readable name of the record type",
      "type": "string"
@@ -999,7 +1045,7 @@
      "type": "string"
     },
     "states": {
-     "description": "A map of the states/status categories that should be created in DevRev and are expected to be used in the stage diagram. If no explicit states are defined, the default states 'open', 'in_progress' and 'closed' will be used.",
+     "description": "A map of the states/status categories that should be created in DevRev and are expected to be used in the stage diagram. If no explicit states are defined, the default states 'open', 'in_progress', 'closed' for works and 'open', 'in_progress', 'deployed', 'inactive' for parts will be used.",
      "additionalProperties": {
       "$ref": "#/definitions/CustomState"
      },
