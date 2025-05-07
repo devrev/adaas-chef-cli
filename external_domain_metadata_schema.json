@@ -247,9 +247,13 @@
       "date",
       "timestamp",
       "struct",
-      "permission"
+      "permission",
+      "type_key"
      ],
      "type": "string"
+    },
+    "type_key": {
+     "$ref": "#/definitions/TargetTypeKeyData"
     },
     "typed_reference": {
      "$ref": "#/definitions/TypedReferenceData"
@@ -298,6 +302,10 @@
         "bool"
        ],
        "type": "string"
+      },
+      "type_key": {
+       "type": "object",
+       "not": {}
       },
       "typed_reference": {
        "type": "object",
@@ -348,6 +356,10 @@
        ],
        "type": "string"
       },
+      "type_key": {
+       "type": "object",
+       "not": {}
+      },
       "typed_reference": {
        "type": "object",
        "not": {}
@@ -396,6 +408,10 @@
         "float"
        ],
        "type": "string"
+      },
+      "type_key": {
+       "type": "object",
+       "not": {}
       },
       "typed_reference": {
        "type": "object",
@@ -446,6 +462,10 @@
        ],
        "type": "string"
       },
+      "type_key": {
+       "type": "object",
+       "not": {}
+      },
       "typed_reference": {
        "type": "object",
        "not": {}
@@ -491,6 +511,10 @@
         "rich_text"
        ],
        "type": "string"
+      },
+      "type_key": {
+       "type": "object",
+       "not": {}
       },
       "typed_reference": {
        "type": "object",
@@ -542,6 +566,10 @@
        ],
        "type": "string"
       },
+      "type_key": {
+       "type": "object",
+       "not": {}
+      },
       "typed_reference": {
        "type": "object",
        "not": {}
@@ -588,6 +616,10 @@
         "reference"
        ],
        "type": "string"
+      },
+      "type_key": {
+       "type": "object",
+       "not": {}
       },
       "typed_reference": {
        "type": "object",
@@ -636,6 +668,10 @@
        ],
        "type": "string"
       },
+      "type_key": {
+       "type": "object",
+       "not": {}
+      },
       "typed_reference": {
        "$ref": "#/definitions/TypedReferenceData",
        "description": "The specifics of the field if the type is 'typed_reference'"
@@ -682,6 +718,10 @@
         "struct"
        ],
        "type": "string"
+      },
+      "type_key": {
+       "type": "object",
+       "not": {}
       },
       "typed_reference": {
        "type": "object",
@@ -732,6 +772,10 @@
        ],
        "type": "string"
       },
+      "type_key": {
+       "type": "object",
+       "not": {}
+      },
       "typed_reference": {
        "type": "object",
        "not": {}
@@ -781,6 +825,10 @@
        ],
        "type": "string"
       },
+      "type_key": {
+       "type": "object",
+       "not": {}
+      },
       "typed_reference": {
        "type": "object",
        "not": {}
@@ -825,6 +873,59 @@
         "permission"
        ],
        "type": "string"
+      },
+      "type_key": {
+       "type": "object",
+       "not": {}
+      },
+      "typed_reference": {
+       "type": "object",
+       "not": {}
+      }
+     },
+     "type": "object"
+    },
+    {
+     "required": [
+      "type"
+     ],
+     "properties": {
+      "enum": {
+       "type": "object",
+       "not": {}
+      },
+      "float": {
+       "type": "object",
+       "not": {}
+      },
+      "int": {
+       "type": "object",
+       "not": {}
+      },
+      "permission": {
+       "type": "object",
+       "not": {}
+      },
+      "reference": {
+       "type": "object",
+       "not": {}
+      },
+      "struct": {
+       "type": "object",
+       "not": {}
+      },
+      "text": {
+       "type": "object",
+       "not": {}
+      },
+      "type": {
+       "enum": [
+        "type_key"
+       ],
+       "type": "string"
+      },
+      "type_key": {
+       "$ref": "#/definitions/TargetTypeKeyData"
       },
       "typed_reference": {
        "type": "object",
@@ -954,6 +1055,10 @@
      "description": "Whether the record type can be loaded: that is, whether the connector supports creating it in the system",
      "type": "boolean"
     },
+    "is_snapshot": {
+     "description": "Whether the record type sends the complete system state in every sync",
+     "type": "boolean"
+    },
     "link_naming_data": {
      "$ref": "#/definitions/CustomLinkData"
     },
@@ -1079,6 +1184,22 @@
     "name": {
      "description": "The human readable name of the struct type",
      "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "TargetTypeKeyData": {
+   "required": [
+    "type_keys"
+   ],
+   "additionalProperties": false,
+   "properties": {
+    "type_keys": {
+     "description": "The possible record types or record type categories that can be targeted in authorization policy.",
+     "items": {
+      "type": "string"
+     },
+     "type": "array"
     }
    },
    "type": "object"
