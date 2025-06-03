@@ -1,8 +1,8 @@
 # chef-cli
 
-DevRev auxiliary CLI for ADaaS recipe development.
+DevRev auxiliary CLI for Airdrop snap-in recipe development.
 
-General ADaaS documentation: https://developer.devrev.ai/airdrop
+General Airdrop snap-in documentation: https://developer.devrev.ai/airdrop
 
 chef-cli documentation: https://developer.devrev.ai/airdrop/initial-domain-mapping
 
