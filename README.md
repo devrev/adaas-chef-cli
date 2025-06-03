@@ -1,10 +1,10 @@
 # chef-cli
 
-DevRev auxiliary CLI for ADaaS recipe development
+DevRev auxiliary CLI for ADaaS recipe development.
 
-General ADaaS documentation: https://developer.devrev.ai/snapin-development/adaas/overview
+General ADaaS documentation: https://developer.devrev.ai/airdrop
 
-chef-cli documentation is under [/docs](docs)
+chef-cli documentation: https://developer.devrev.ai/airdrop/initial-domain-mapping
 
 ## Install chef-cli
 
@@ -27,11 +27,3 @@ To install PowerShell auto-completions, first run `Set-ExecutionPolicy -Scope Pr
 ```text
 /path/to/this/repo/autocomplete/chef-cli.ps1
 ```
-
-## Documentation
-
-- [Step-by-Step Guide](docs/step_by_step.md)
-- [Supported Types](docs/supported_types.md)
-- [Tips](docs/tips.md)
-- [Reasons why some mappings might be unavailable](docs/mapping_reasons.md)
-- [Using chef-cli as an MCP Server](docs/mcp.md)
