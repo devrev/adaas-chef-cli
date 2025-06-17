@@ -2,6 +2,12 @@
 
 #compdef chef-cli
 
+# Initialize completion system if needed
+if (( ! $+functions[compinit] )); then
+  autoload -U compinit
+  compinit
+fi
+
 _cli_zsh_autocomplete() {
   local -a opts
   local cur
@@ -19,4 +25,5 @@ _cli_zsh_autocomplete() {
   fi
 }
 
+# Register the completion function
 compdef _cli_zsh_autocomplete chef-cli
