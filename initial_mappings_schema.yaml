@@ -38,10 +38,7 @@ $defs:
             mode:
                 enum:
                     - create_shard
-                    - set_existing_shard
                 type: string
-            set_existing_shard:
-                $ref: '#/$defs/airdrop-recipe-set-existing-shard'
         title: airdrop-recipe-create-possible-custom-object-mapping-shard
         type: object
     airdrop-recipe-create-possible-record-type-mapping:
@@ -85,7 +82,6 @@ $defs:
             existing one.
         enum:
             - create_shard
-            - set_existing_shard
         type: string
     airdrop-recipe-create-possible-record-type-mappings:
         properties:
@@ -195,10 +191,7 @@ $defs:
                     Mapping between DevRev link types and external link types.
                 type: object
         required:
-            - link_type_names
             - reverse_stock_types
-            - source_types
-            - target_types
         title: airdrop-recipe-make-custom-links
         type: object
     airdrop-recipe-make-custom-stages:
@@ -465,41 +458,21 @@ $defs:
         type: object
 $schema: https://json-schema.org/draft/2020-12/schema
 properties:
-    external_system_id:
-        description: |
-            The unique ID of the external system to which these mappings apply.
-        format: text
-        type: string
-    external_system_type:
-        description: Type of the SoR to which these initial mappings apply.
-        format: text
-        type: string
-    import_slug:
-        description: |
-            Snap-in slug to which the mappings apply, only populated for ADaaS
-            external system type.
-        format: text
-        type: string
-    record_type_category_mappings:
-        additionalProperties:
-            $ref: '#/$defs/airdrop-recipe-create-possible-record-type-mappings'
-        description: |
-            Possible mappings of record type categories to devrev object types.
+    additional_mappings:
+        properties:
+            record_type_category_mappings:
+                additionalProperties:
+                    $ref: '#/$defs/airdrop-recipe-create-possible-record-type-mappings'
+                description: |
+                    Possible mappings of record type categories to devrev object types.
+                type: object
+            record_type_mappings:
+                additionalProperties:
+                    $ref: '#/$defs/airdrop-recipe-create-possible-record-type-mappings'
+                description: |
+                    Possible mappings of external record types to devrev object types.
+                type: object
         type: object
-    record_type_mappings:
-        additionalProperties:
-            $ref: '#/$defs/airdrop-recipe-create-possible-record-type-mappings'
-        description: |
-            Possible mappings of external record types to devrev object types.
-        type: object
-    snap_in_slug:
-        description: |
-            Snap-in slug to which the mappings apply, only populated for ADaaS
-            external system type.
-        format: text
-        type: string
-required:
-    - external_system_type
 title: airdrop-recipe-initial-domain-mappings-install-request
 type: object
 
