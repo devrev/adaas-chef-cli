@@ -32,18 +32,26 @@ $defs:
         title: airdrop-recipe-create-possible-custom-object-mapping
         type: object
     airdrop-recipe-create-possible-custom-object-mapping-shard:
+        discriminator:
+            mapping:
+                create_shard: '#/$defs/airdrop-recipe-blueprint-shards-create-request'
+            propertyName: mode
+        oneOf:
+            - $ref: '#/$defs/airdrop-recipe-blueprint-shards-create-request'
         properties:
-            create_shard:
-                $ref: '#/$defs/airdrop-recipe-blueprint-shards-create-request'
             mode:
-                enum:
-                    - create_shard
-                    - set_existing_shard
-                type: string
-            set_existing_shard:
-                $ref: '#/$defs/airdrop-recipe-set-existing-shard'
+                $ref: '#/$defs/airdrop-recipe-create-possible-custom-object-mapping-shard-mode'
+        required:
+            - mode
         title: airdrop-recipe-create-possible-custom-object-mapping-shard
         type: object
+    airdrop-recipe-create-possible-custom-object-mapping-shard-mode:
+        description: |
+            You can either create a fresh shard to use for this mapping, assign an
+            existing one.
+        enum:
+            - create_shard
+        type: string
     airdrop-recipe-create-possible-record-type-mapping:
         properties:
             devrev_leaf_type:
@@ -85,7 +93,6 @@ $defs:
             existing one.
         enum:
             - create_shard
-            - set_existing_shard
         type: string
     airdrop-recipe-create-possible-record-type-mappings:
         properties:
@@ -95,7 +102,7 @@ $defs:
                 $ref: '#/$defs/airdrop-recipe-create-possible-custom-object-mapping'
             possible_record_type_mappings:
                 description: |
-                    Stock devrev types to which the external type might be mapped.
+                    Stock DevRev types to which the external type might be mapped.
                 items:
                     $ref: '#/$defs/airdrop-recipe-create-possible-record-type-mapping'
                 type: array
@@ -146,6 +153,30 @@ $defs:
             - stock
             - synthetic
         type: string
+    airdrop-recipe-fallback:
+        properties:
+            type:
+                $ref: '#/$defs/airdrop-recipe-fallback-type'
+            value:
+                description: |
+                    The fallback used for required DevRev fields in case no value is
+                    provided.
+        required:
+            - type
+            - value
+        title: airdrop-recipe-fallback
+        type: object
+    airdrop-recipe-fallback-type:
+        enum:
+            - bool
+            - date
+            - enum
+            - float
+            - int
+            - rich_text
+            - text
+            - timestamp
+        type: string
     airdrop-recipe-filter-typed-reference:
         properties:
             allowed_types:
@@ -195,10 +226,7 @@ $defs:
                     Mapping between DevRev link types and external link types.
                 type: object
         required:
-            - link_type_names
             - reverse_stock_types
-            - source_types
-            - target_types
         title: airdrop-recipe-make-custom-links
         type: object
     airdrop-recipe-make-custom-stages:
@@ -285,6 +313,8 @@ $defs:
             primary_external_field, multiple secondary_external_fields, both or
             neither.
         properties:
+            fallback:
+                $ref: '#/$defs/airdrop-recipe-fallback'
             forward:
                 description: |
                     True if this mapping is used in initial and sync_to_devrev runs.
@@ -448,7 +478,7 @@ $defs:
         title: airdrop-recipe-use-fixed-value
         type: object
     airdrop-recipe-use-fixed-value-value:
-        description: Pick between a fixed boolean and a fixed devrev enum.
+        description: Pick between a fixed boolean and a fixed DevRev enum.
         enum:
             - bool
             - enum_value
@@ -465,41 +495,31 @@ $defs:
         type: object
 $schema: https://json-schema.org/draft/2020-12/schema
 properties:
-    external_system_id:
-        description: |
-            The unique ID of the external system to which these mappings apply.
-        format: text
-        type: string
-    external_system_type:
-        description: Type of the SoR to which these initial mappings apply.
-        format: text
-        type: string
-    import_slug:
-        description: |
-            Snap-in slug to which the mappings apply, only populated for ADaaS
-            external system type.
-        format: text
-        type: string
-    record_type_category_mappings:
-        additionalProperties:
-            $ref: '#/$defs/airdrop-recipe-create-possible-record-type-mappings'
-        description: |
-            Possible mappings of record type categories to devrev object types.
+    additional_mappings:
+        properties:
+            record_type_category_mappings:
+                additionalProperties:
+                    $ref: '#/$defs/airdrop-recipe-create-possible-record-type-mappings'
+                description: |
+                    Possible mappings of record type categories to DevRev object types.
+                type: object
+            record_type_mappings:
+                additionalProperties:
+                    $ref: '#/$defs/airdrop-recipe-create-possible-record-type-mappings'
+                description: |
+                    Possible mappings of external record types to DevRev object types.
+                type: object
         type: object
-    record_type_mappings:
-        additionalProperties:
-            $ref: '#/$defs/airdrop-recipe-create-possible-record-type-mappings'
+    devrev_metadata_version:
         description: |
-            Possible mappings of external record types to devrev object types.
-        type: object
-    snap_in_slug:
-        description: |
-            Snap-in slug to which the mappings apply, only populated for ADaaS
-            external system type.
+            The version of the DevRev metadata on which the offered options are
+            based.
+        format: int64
+        type: integer
+    format_version:
+        description: The format version of initial domain mapping.
         format: text
         type: string
-required:
-    - external_system_type
 title: airdrop-recipe-initial-domain-mappings-install-request
 type: object
 
