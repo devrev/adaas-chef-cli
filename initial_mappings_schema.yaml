@@ -216,6 +216,10 @@ $defs:
         additionalProperties: false
         title: airdrop-recipe-make-authorization-target
         type: object
+    airdrop-recipe-make-conditional-access:
+        additionalProperties: false
+        title: airdrop-recipe-make-conditional-access
+        type: object
     airdrop-recipe-make-custom-links:
         properties:
             reverse_stock_types:
@@ -240,6 +244,14 @@ $defs:
         required:
             - stages
         title: airdrop-recipe-make-custom-stages
+        type: object
+    airdrop-recipe-make-field-access:
+        additionalProperties: false
+        title: airdrop-recipe-make-field-access
+        type: object
+    airdrop-recipe-make-object-access:
+        additionalProperties: false
+        title: airdrop-recipe-make-object-access
         type: object
     airdrop-recipe-map-enum:
         description: |
@@ -341,23 +353,33 @@ $defs:
             mapping:
                 filter_typed_reference: '#/$defs/airdrop-recipe-filter-typed-reference'
                 make_authorization_target: '#/$defs/airdrop-recipe-make-authorization-target'
+                make_conditional_access: '#/$defs/airdrop-recipe-make-conditional-access'
                 make_custom_links: '#/$defs/airdrop-recipe-make-custom-links'
                 make_custom_stages: '#/$defs/airdrop-recipe-make-custom-stages'
+                make_field_access: '#/$defs/airdrop-recipe-make-field-access'
+                make_object_access: '#/$defs/airdrop-recipe-make-object-access'
                 make_struct: '#/$defs/airdrop-recipe-set-make-struct'
                 map_enum: '#/$defs/airdrop-recipe-map-enum'
                 map_roles: '#/$defs/airdrop-recipe-map-roles'
                 use_as_array_value: '#/$defs/airdrop-recipe-use-as-array-value'
                 use_devrev_record: '#/$defs/airdrop-recipe-use-dev-rev-record'
                 use_directly: '#/$defs/airdrop-recipe-use-directly'
+                use_fallback: '#/$defs/airdrop-recipe-use-fallback'
                 use_first_non_null: '#/$defs/airdrop-recipe-set-use-first-non-null'
                 use_fixed_value: '#/$defs/airdrop-recipe-use-fixed-value'
                 use_rich_text: '#/$defs/airdrop-recipe-use-rich-text'
+                use_rich_text_for_article: '#/$defs/airdrop-recipe-use-rich-text-for-article'
+                use_synthetic_devrev_record: '#/$defs/airdrop-recipe-use-synthetic-dev-rev-record'
+                use_url_for_article: '#/$defs/airdrop-recipe-use-url-for-article'
             propertyName: transformation_method
         oneOf:
             - $ref: '#/$defs/airdrop-recipe-filter-typed-reference'
             - $ref: '#/$defs/airdrop-recipe-make-authorization-target'
+            - $ref: '#/$defs/airdrop-recipe-make-conditional-access'
             - $ref: '#/$defs/airdrop-recipe-make-custom-links'
             - $ref: '#/$defs/airdrop-recipe-make-custom-stages'
+            - $ref: '#/$defs/airdrop-recipe-make-field-access'
+            - $ref: '#/$defs/airdrop-recipe-make-object-access'
             - $ref: '#/$defs/airdrop-recipe-map-enum'
             - $ref: '#/$defs/airdrop-recipe-map-roles'
             - $ref: '#/$defs/airdrop-recipe-set-make-struct'
@@ -365,8 +387,12 @@ $defs:
             - $ref: '#/$defs/airdrop-recipe-use-as-array-value'
             - $ref: '#/$defs/airdrop-recipe-use-dev-rev-record'
             - $ref: '#/$defs/airdrop-recipe-use-directly'
+            - $ref: '#/$defs/airdrop-recipe-use-fallback'
             - $ref: '#/$defs/airdrop-recipe-use-fixed-value'
             - $ref: '#/$defs/airdrop-recipe-use-rich-text'
+            - $ref: '#/$defs/airdrop-recipe-use-rich-text-for-article'
+            - $ref: '#/$defs/airdrop-recipe-use-synthetic-dev-rev-record'
+            - $ref: '#/$defs/airdrop-recipe-use-url-for-article'
         properties:
             transformation_method:
                 $ref: '#/$defs/airdrop-recipe-set-field-mapping-transformation-method-transformation-method'
@@ -380,18 +406,25 @@ $defs:
         enum:
             - filter_typed_reference
             - make_authorization_target
+            - make_conditional_access
             - make_custom_links
             - make_custom_stages
+            - make_field_access
+            - make_object_access
             - make_struct
             - map_enum
             - map_roles
             - use_as_array_value
             - use_devrev_record
             - use_directly
+            - use_fallback
             - use_first_non_null
             - use_fixed_value
             - use_raw_jq
             - use_rich_text
+            - use_rich_text_for_article
+            - use_synthetic_devrev_record
+            - use_url_for_article
         type: string
     airdrop-recipe-set-make-struct:
         properties:
@@ -459,6 +492,11 @@ $defs:
         description: Use the external value directly without any change.
         title: airdrop-recipe-use-directly
         type: object
+    airdrop-recipe-use-fallback:
+        additionalProperties: false
+        description: Use the fallback provided in the initial domain mapping.
+        title: airdrop-recipe-use-fallback
+        type: object
     airdrop-recipe-use-fixed-value:
         description: |
             User can choose between a fixed boolean and a fixed enum value.
@@ -488,6 +526,34 @@ $defs:
         additionalProperties: false
         description: Make a rich text field.
         title: airdrop-recipe-use-rich-text
+        type: object
+    airdrop-recipe-use-rich-text-for-article:
+        additionalProperties: false
+        description: |
+            Use a rich text field to populate the article resource content.
+        title: airdrop-recipe-use-rich-text-for-article
+        type: object
+    airdrop-recipe-use-synthetic-dev-rev-record:
+        description: |
+            Reference a synthetic record that will be created by airdrop during the
+            import.
+        properties:
+            is_collection:
+                description: Whether the field is a collection.
+                type: boolean
+            synthetic_key:
+                description: Key of the synthetic record that should be used.
+                format: text
+                type: string
+        required:
+            - synthetic_key
+        title: airdrop-recipe-use-synthetic-dev-rev-record
+        type: object
+    airdrop-recipe-use-url-for-article:
+        additionalProperties: false
+        description: |
+            Use a text field to populate the article resource with a URL.
+        title: airdrop-recipe-use-url-for-article
         type: object
     empty:
         additionalProperties: false

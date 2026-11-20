@@ -5,6 +5,20 @@
  ],
  "additionalProperties": false,
  "definitions": {
+  "Attachments": {
+   "additionalProperties": false,
+   "properties": {
+    "is_extractable": {
+     "description": "Whether attachments can be extracted",
+     "type": "boolean"
+    },
+    "is_loadable": {
+     "description": "Whether attachments can be loaded: that is, whether the connector supports creating it in the system",
+     "type": "boolean"
+    }
+   },
+   "type": "object"
+  },
   "CollectionData": {
    "additionalProperties": false,
    "properties": {
@@ -15,6 +29,22 @@
     "min_length": {
      "minimum": 0,
      "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "ConditionalPrivilegeData": {
+   "required": [
+    "type_keys"
+   ],
+   "additionalProperties": false,
+   "properties": {
+    "type_keys": {
+     "description": "The possible record types or record type categories that can be targeted in conditional privilege.",
+     "items": {
+      "type": "string"
+     },
+     "type": "array"
     }
    },
    "type": "object"
@@ -167,6 +197,9 @@
      "$ref": "#/definitions/CollectionData",
      "description": "If collection is set, the field is a 'collection' of the given type. eg a list of enum values"
     },
+    "conditional_privilege": {
+     "$ref": "#/definitions/ConditionalPrivilegeData"
+    },
     "default_value": {},
     "description": {
      "type": "string"
@@ -174,20 +207,20 @@
     "enum": {
      "$ref": "#/definitions/EnumData"
     },
+    "field_privilege": {
+     "$ref": "#/definitions/FieldPrivilegeData"
+    },
+    "field_reference": {
+     "$ref": "#/definitions/FieldReferenceData"
+    },
     "float": {
      "$ref": "#/definitions/FloatData"
     },
     "int": {
      "$ref": "#/definitions/IntData"
     },
-    "is_filterable": {
-     "type": [
-      "boolean",
-      "null"
-     ]
-    },
     "is_identifier": {
-     "description": "is_identifier indicates that the field can be used to uniquely lookup a record. This is meant for fields that are not the primary key of the record type, for example email in an user.",
+     "description": "is_identifier indicates that the field can be used to uniquely lookup a record. This is meant for fields that are not the primary key of the record type, for example email in a user.",
      "type": [
       "boolean",
       "null"
@@ -221,8 +254,14 @@
     "name": {
      "type": "string"
     },
+    "participation": {
+     "$ref": "#/definitions/ParticipationData"
+    },
     "permission": {
      "$ref": "#/definitions/PermissionData"
+    },
+    "record_type_privilege": {
+     "$ref": "#/definitions/RecordTypePrivilegeData"
     },
     "reference": {
      "$ref": "#/definitions/ReferenceData"
@@ -248,7 +287,11 @@
       "timestamp",
       "struct",
       "permission",
-      "type_key"
+      "type_key",
+      "record_type_privilege",
+      "field_privilege",
+      "conditional_privilege",
+      "participation"
      ],
      "type": "string"
     },
@@ -266,10 +309,22 @@
       "type"
      ],
      "properties": {
+      "conditional_privilege": {
+       "type": "object",
+       "not": {}
+      },
       "default_value": {
        "type": "boolean"
       },
       "enum": {
+       "type": "object",
+       "not": {}
+      },
+      "field_privilege": {
+       "type": "object",
+       "not": {}
+      },
+      "field_reference": {
        "type": "object",
        "not": {}
       },
@@ -281,7 +336,15 @@
        "type": "object",
        "not": {}
       },
+      "participation": {
+       "type": "object",
+       "not": {}
+      },
       "permission": {
+       "type": "object",
+       "not": {}
+      },
+      "record_type_privilege": {
        "type": "object",
        "not": {}
       },
@@ -319,10 +382,22 @@
       "type"
      ],
      "properties": {
+      "conditional_privilege": {
+       "type": "object",
+       "not": {}
+      },
       "default_value": {
        "type": "integer"
       },
       "enum": {
+       "type": "object",
+       "not": {}
+      },
+      "field_privilege": {
+       "type": "object",
+       "not": {}
+      },
+      "field_reference": {
        "type": "object",
        "not": {}
       },
@@ -334,7 +409,15 @@
        "$ref": "#/definitions/IntData",
        "description": "The specifics of the field if the type is 'int'"
       },
+      "participation": {
+       "type": "object",
+       "not": {}
+      },
       "permission": {
+       "type": "object",
+       "not": {}
+      },
+      "record_type_privilege": {
        "type": "object",
        "not": {}
       },
@@ -372,10 +455,22 @@
       "type"
      ],
      "properties": {
+      "conditional_privilege": {
+       "type": "object",
+       "not": {}
+      },
       "default_value": {
        "type": "number"
       },
       "enum": {
+       "type": "object",
+       "not": {}
+      },
+      "field_privilege": {
+       "type": "object",
+       "not": {}
+      },
+      "field_reference": {
        "type": "object",
        "not": {}
       },
@@ -387,7 +482,15 @@
        "type": "object",
        "not": {}
       },
+      "participation": {
+       "type": "object",
+       "not": {}
+      },
       "permission": {
+       "type": "object",
+       "not": {}
+      },
+      "record_type_privilege": {
        "type": "object",
        "not": {}
       },
@@ -425,10 +528,22 @@
       "type"
      ],
      "properties": {
+      "conditional_privilege": {
+       "type": "object",
+       "not": {}
+      },
       "default_value": {
        "type": "string"
       },
       "enum": {
+       "type": "object",
+       "not": {}
+      },
+      "field_privilege": {
+       "type": "object",
+       "not": {}
+      },
+      "field_reference": {
        "type": "object",
        "not": {}
       },
@@ -440,7 +555,15 @@
        "type": "object",
        "not": {}
       },
+      "participation": {
+       "type": "object",
+       "not": {}
+      },
       "permission": {
+       "type": "object",
+       "not": {}
+      },
+      "record_type_privilege": {
        "type": "object",
        "not": {}
       },
@@ -478,7 +601,19 @@
       "type"
      ],
      "properties": {
+      "conditional_privilege": {
+       "type": "object",
+       "not": {}
+      },
       "enum": {
+       "type": "object",
+       "not": {}
+      },
+      "field_privilege": {
+       "type": "object",
+       "not": {}
+      },
+      "field_reference": {
        "type": "object",
        "not": {}
       },
@@ -490,7 +625,15 @@
        "type": "object",
        "not": {}
       },
+      "participation": {
+       "type": "object",
+       "not": {}
+      },
       "permission": {
+       "type": "object",
+       "not": {}
+      },
+      "record_type_privilege": {
        "type": "object",
        "not": {}
       },
@@ -529,12 +672,24 @@
       "enum"
      ],
      "properties": {
+      "conditional_privilege": {
+       "type": "object",
+       "not": {}
+      },
       "default_value": {
        "type": "string"
       },
       "enum": {
        "$ref": "#/definitions/EnumData",
        "description": "The specifics of the field if the type is 'enum'"
+      },
+      "field_privilege": {
+       "type": "object",
+       "not": {}
+      },
+      "field_reference": {
+       "type": "object",
+       "not": {}
       },
       "float": {
        "type": "object",
@@ -544,7 +699,15 @@
        "type": "object",
        "not": {}
       },
+      "participation": {
+       "type": "object",
+       "not": {}
+      },
       "permission": {
+       "type": "object",
+       "not": {}
+      },
+      "record_type_privilege": {
        "type": "object",
        "not": {}
       },
@@ -583,7 +746,19 @@
       "reference"
      ],
      "properties": {
+      "conditional_privilege": {
+       "type": "object",
+       "not": {}
+      },
       "enum": {
+       "type": "object",
+       "not": {}
+      },
+      "field_privilege": {
+       "type": "object",
+       "not": {}
+      },
+      "field_reference": {
        "type": "object",
        "not": {}
       },
@@ -595,7 +770,15 @@
        "type": "object",
        "not": {}
       },
+      "participation": {
+       "type": "object",
+       "not": {}
+      },
       "permission": {
+       "type": "object",
+       "not": {}
+      },
+      "record_type_privilege": {
        "type": "object",
        "not": {}
       },
@@ -634,7 +817,19 @@
       "typed_reference"
      ],
      "properties": {
+      "conditional_privilege": {
+       "type": "object",
+       "not": {}
+      },
       "enum": {
+       "type": "object",
+       "not": {}
+      },
+      "field_privilege": {
+       "type": "object",
+       "not": {}
+      },
+      "field_reference": {
        "type": "object",
        "not": {}
       },
@@ -646,7 +841,15 @@
        "type": "object",
        "not": {}
       },
+      "participation": {
+       "type": "object",
+       "not": {}
+      },
       "permission": {
+       "type": "object",
+       "not": {}
+      },
+      "record_type_privilege": {
        "type": "object",
        "not": {}
       },
@@ -685,7 +888,19 @@
       "struct"
      ],
      "properties": {
+      "conditional_privilege": {
+       "type": "object",
+       "not": {}
+      },
       "enum": {
+       "type": "object",
+       "not": {}
+      },
+      "field_privilege": {
+       "type": "object",
+       "not": {}
+      },
+      "field_reference": {
        "type": "object",
        "not": {}
       },
@@ -697,7 +912,15 @@
        "type": "object",
        "not": {}
       },
+      "participation": {
+       "type": "object",
+       "not": {}
+      },
       "permission": {
+       "type": "object",
+       "not": {}
+      },
+      "record_type_privilege": {
        "type": "object",
        "not": {}
       },
@@ -735,10 +958,22 @@
       "type"
      ],
      "properties": {
+      "conditional_privilege": {
+       "type": "object",
+       "not": {}
+      },
       "default_value": {
        "type": "string"
       },
       "enum": {
+       "type": "object",
+       "not": {}
+      },
+      "field_privilege": {
+       "type": "object",
+       "not": {}
+      },
+      "field_reference": {
        "type": "object",
        "not": {}
       },
@@ -750,7 +985,15 @@
        "type": "object",
        "not": {}
       },
+      "participation": {
+       "type": "object",
+       "not": {}
+      },
       "permission": {
+       "type": "object",
+       "not": {}
+      },
+      "record_type_privilege": {
        "type": "object",
        "not": {}
       },
@@ -788,10 +1031,22 @@
       "type"
      ],
      "properties": {
+      "conditional_privilege": {
+       "type": "object",
+       "not": {}
+      },
       "default_value": {
        "type": "string"
       },
       "enum": {
+       "type": "object",
+       "not": {}
+      },
+      "field_privilege": {
+       "type": "object",
+       "not": {}
+      },
+      "field_reference": {
        "type": "object",
        "not": {}
       },
@@ -803,7 +1058,15 @@
        "type": "object",
        "not": {}
       },
+      "participation": {
+       "type": "object",
+       "not": {}
+      },
       "permission": {
+       "type": "object",
+       "not": {}
+      },
+      "record_type_privilege": {
        "type": "object",
        "not": {}
       },
@@ -841,7 +1104,19 @@
       "type"
      ],
      "properties": {
+      "conditional_privilege": {
+       "type": "object",
+       "not": {}
+      },
       "enum": {
+       "type": "object",
+       "not": {}
+      },
+      "field_privilege": {
+       "type": "object",
+       "not": {}
+      },
+      "field_reference": {
        "type": "object",
        "not": {}
       },
@@ -853,8 +1128,16 @@
        "type": "object",
        "not": {}
       },
+      "participation": {
+       "type": "object",
+       "not": {}
+      },
       "permission": {
        "$ref": "#/definitions/PermissionData"
+      },
+      "record_type_privilege": {
+       "type": "object",
+       "not": {}
       },
       "reference": {
        "type": "object",
@@ -890,7 +1173,19 @@
       "type"
      ],
      "properties": {
+      "conditional_privilege": {
+       "type": "object",
+       "not": {}
+      },
       "enum": {
+       "type": "object",
+       "not": {}
+      },
+      "field_privilege": {
+       "type": "object",
+       "not": {}
+      },
+      "field_reference": {
        "type": "object",
        "not": {}
       },
@@ -902,7 +1197,15 @@
        "type": "object",
        "not": {}
       },
+      "participation": {
+       "type": "object",
+       "not": {}
+      },
       "permission": {
+       "type": "object",
+       "not": {}
+      },
+      "record_type_privilege": {
        "type": "object",
        "not": {}
       },
@@ -926,6 +1229,351 @@
       },
       "type_key": {
        "$ref": "#/definitions/TargetTypeKeyData"
+      },
+      "typed_reference": {
+       "type": "object",
+       "not": {}
+      }
+     },
+     "type": "object"
+    },
+    {
+     "required": [
+      "type"
+     ],
+     "properties": {
+      "conditional_privilege": {
+       "type": "object",
+       "not": {}
+      },
+      "enum": {
+       "type": "object",
+       "not": {}
+      },
+      "field_privilege": {
+       "type": "object",
+       "not": {}
+      },
+      "field_reference": {
+       "$ref": "#/definitions/FieldReferenceData"
+      },
+      "float": {
+       "type": "object",
+       "not": {}
+      },
+      "int": {
+       "type": "object",
+       "not": {}
+      },
+      "participation": {
+       "type": "object",
+       "not": {}
+      },
+      "permission": {
+       "type": "object",
+       "not": {}
+      },
+      "record_type_privilege": {
+       "type": "object",
+       "not": {}
+      },
+      "reference": {
+       "type": "object",
+       "not": {}
+      },
+      "struct": {
+       "type": "object",
+       "not": {}
+      },
+      "text": {
+       "type": "object",
+       "not": {}
+      },
+      "type": {
+       "enum": [
+        "field_reference"
+       ],
+       "type": "string"
+      },
+      "type_key": {
+       "type": "object",
+       "not": {}
+      },
+      "typed_reference": {
+       "type": "object",
+       "not": {}
+      }
+     },
+     "type": "object"
+    },
+    {
+     "required": [
+      "type"
+     ],
+     "properties": {
+      "conditional_privilege": {
+       "type": "object",
+       "not": {}
+      },
+      "enum": {
+       "type": "object",
+       "not": {}
+      },
+      "field_privilege": {
+       "type": "object",
+       "not": {}
+      },
+      "field_reference": {
+       "type": "object",
+       "not": {}
+      },
+      "float": {
+       "type": "object",
+       "not": {}
+      },
+      "int": {
+       "type": "object",
+       "not": {}
+      },
+      "participation": {
+       "type": "object",
+       "not": {}
+      },
+      "permission": {
+       "type": "object",
+       "not": {}
+      },
+      "record_type_privilege": {
+       "$ref": "#/definitions/RecordTypePrivilegeData"
+      },
+      "reference": {
+       "type": "object",
+       "not": {}
+      },
+      "struct": {
+       "type": "object",
+       "not": {}
+      },
+      "text": {
+       "type": "object",
+       "not": {}
+      },
+      "type": {
+       "enum": [
+        "record_type_privilege"
+       ],
+       "type": "string"
+      },
+      "type_key": {
+       "type": "object",
+       "not": {}
+      },
+      "typed_reference": {
+       "type": "object",
+       "not": {}
+      }
+     },
+     "type": "object"
+    },
+    {
+     "required": [
+      "type"
+     ],
+     "properties": {
+      "conditional_privilege": {
+       "type": "object",
+       "not": {}
+      },
+      "enum": {
+       "type": "object",
+       "not": {}
+      },
+      "field_privilege": {
+       "$ref": "#/definitions/FieldPrivilegeData"
+      },
+      "field_reference": {
+       "type": "object",
+       "not": {}
+      },
+      "float": {
+       "type": "object",
+       "not": {}
+      },
+      "int": {
+       "type": "object",
+       "not": {}
+      },
+      "participation": {
+       "type": "object",
+       "not": {}
+      },
+      "permission": {
+       "type": "object",
+       "not": {}
+      },
+      "record_type_privilege": {
+       "type": "object",
+       "not": {}
+      },
+      "reference": {
+       "type": "object",
+       "not": {}
+      },
+      "struct": {
+       "type": "object",
+       "not": {}
+      },
+      "text": {
+       "type": "object",
+       "not": {}
+      },
+      "type": {
+       "enum": [
+        "field_privilege"
+       ],
+       "type": "string"
+      },
+      "type_key": {
+       "type": "object",
+       "not": {}
+      },
+      "typed_reference": {
+       "type": "object",
+       "not": {}
+      }
+     },
+     "type": "object"
+    },
+    {
+     "required": [
+      "type"
+     ],
+     "properties": {
+      "conditional_privilege": {
+       "$ref": "#/definitions/ConditionalPrivilegeData"
+      },
+      "enum": {
+       "type": "object",
+       "not": {}
+      },
+      "field_privilege": {
+       "type": "object",
+       "not": {}
+      },
+      "field_reference": {
+       "type": "object",
+       "not": {}
+      },
+      "float": {
+       "type": "object",
+       "not": {}
+      },
+      "int": {
+       "type": "object",
+       "not": {}
+      },
+      "participation": {
+       "type": "object",
+       "not": {}
+      },
+      "permission": {
+       "type": "object",
+       "not": {}
+      },
+      "record_type_privilege": {
+       "type": "object",
+       "not": {}
+      },
+      "reference": {
+       "type": "object",
+       "not": {}
+      },
+      "struct": {
+       "type": "object",
+       "not": {}
+      },
+      "text": {
+       "type": "object",
+       "not": {}
+      },
+      "type": {
+       "enum": [
+        "conditional_privilege"
+       ],
+       "type": "string"
+      },
+      "type_key": {
+       "type": "object",
+       "not": {}
+      },
+      "typed_reference": {
+       "type": "object",
+       "not": {}
+      }
+     },
+     "type": "object"
+    },
+    {
+     "required": [
+      "type"
+     ],
+     "properties": {
+      "conditional_privilege": {
+       "type": "object",
+       "not": {}
+      },
+      "enum": {
+       "type": "object",
+       "not": {}
+      },
+      "field_privilege": {
+       "type": "object",
+       "not": {}
+      },
+      "field_reference": {
+       "type": "object",
+       "not": {}
+      },
+      "float": {
+       "type": "object",
+       "not": {}
+      },
+      "int": {
+       "type": "object",
+       "not": {}
+      },
+      "participation": {
+       "$ref": "#/definitions/ParticipationData"
+      },
+      "permission": {
+       "type": "object",
+       "not": {}
+      },
+      "record_type_privilege": {
+       "type": "object",
+       "not": {}
+      },
+      "reference": {
+       "type": "object",
+       "not": {}
+      },
+      "struct": {
+       "type": "object",
+       "not": {}
+      },
+      "text": {
+       "type": "object",
+       "not": {}
+      },
+      "type": {
+       "enum": [
+        "participation"
+       ],
+       "type": "string"
+      },
+      "type_key": {
+       "type": "object",
+       "not": {}
       },
       "typed_reference": {
        "type": "object",
@@ -986,6 +1634,25 @@
    },
    "type": "array"
   },
+  "FieldPrivilegeData": {
+   "required": [
+    "type_keys"
+   ],
+   "additionalProperties": false,
+   "properties": {
+    "type_keys": {
+     "description": "The possible record types or record type categories that can be targeted in field prvilege.",
+     "items": {
+      "type": "string"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "FieldReferenceData": {
+   "type": "object"
+  },
   "FloatData": {
    "additionalProperties": false,
    "properties": {
@@ -1013,6 +1680,26 @@
   "LoadingData": {
    "type": "object"
   },
+  "ParticipationData": {
+   "required": [
+    "refers_to"
+   ],
+   "additionalProperties": false,
+   "properties": {
+    "invitation_status": {
+     "$ref": "#/definitions/EnumData",
+     "description": "The possible values of the participant's invitation and RSVP status for the meeting."
+    },
+    "refers_to": {
+     "description": "The record types that this participation reference can refer to",
+     "additionalProperties": {
+      "$ref": "#/definitions/ReferenceDetail"
+     },
+     "type": "object"
+    }
+   },
+   "type": "object"
+  },
   "PermissionData": {
    "description": "A value describing access control, associating a reference (member_id) with a role.",
    "additionalProperties": false,
@@ -1026,12 +1713,18 @@
    },
    "type": "object"
   },
+  "QueryCapabilitiesData": {
+   "type": "object"
+  },
   "RecordType": {
    "required": [
     "fields"
    ],
    "additionalProperties": false,
    "properties": {
+    "attachments": {
+     "$ref": "#/definitions/Attachments"
+    },
     "category": {
      "type": "string"
     },
@@ -1066,6 +1759,21 @@
      "description": "The human readable name of the record type",
      "type": "string"
     },
+    "no_identifier": {
+     "description": "Denotes that the record type has no ID field, primarily used for authorization policies",
+     "type": "boolean"
+    },
+    "read_only_existing_subtype": {
+     "type": "string"
+    },
+    "scope": {
+     "description": "Indicates the scope of this record type, whether it is per sync unit, or some larger unit.",
+     "enum": [
+      "metadata_is_system_scoped",
+      "data_is_system_scoped"
+     ],
+     "type": "string"
+    },
     "stage_diagram": {
      "$ref": "#/definitions/StageDiagram"
     }
@@ -1082,6 +1790,22 @@
     "name": {
      "description": "The human readable name of the record type category",
      "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "RecordTypePrivilegeData": {
+   "required": [
+    "type_keys"
+   ],
+   "additionalProperties": false,
+   "properties": {
+    "type_keys": {
+     "description": "The possible record types or record type categories that can be targeted in record type privilege.",
+     "items": {
+      "type": "string"
+     },
+     "type": "array"
     }
    },
    "type": "object"
@@ -1204,6 +1928,18 @@
    },
    "type": "object"
   },
+  "TeamNamingData": {
+   "additionalProperties": false,
+   "properties": {
+    "key": {
+     "type": "string"
+    },
+    "name": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
   "TextData": {
    "additionalProperties": false,
    "properties": {
@@ -1244,6 +1980,17 @@
   }
  },
  "properties": {
+  "attachments": {
+   "$ref": "#/definitions/Attachments",
+   "description": "Whether attachments can be extracted or loaded for this sync unit. Must not be set together with per-recordtype attachment capabilities."
+  },
+  "authorization": {
+   "description": "Authorization metadata in the new format for lakehouse data imports."
+  },
+  "query_capabilities": {
+   "$ref": "#/definitions/QueryCapabilitiesData",
+   "description": "Information about the SQL query capabilities of the connector."
+  },
   "record_type_categories": {
    "additionalProperties": {
     "$ref": "#/definitions/RecordTypeCategory"
@@ -1269,6 +2016,10 @@
     "$ref": "#/definitions/StructType"
    },
    "type": "object"
+  },
+  "team_data": {
+   "$ref": "#/definitions/TeamNamingData",
+   "description": "Naming information of the sync unit's team."
   }
  },
  "type": "object"
